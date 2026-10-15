@@ -1,0 +1,112 @@
+/* ── Header bar ──────────────────────────────────────────── */
+.app-header {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  height: var(--header-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem 0 1.25rem;
+  z-index: 100;
+}
+
+@media (max-width: 767px) {
+  .app-header { left: 0; }
+}
+
+/* ── Hamburger ───────────────────────────────────────────── */
+.header-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  padding: 0.4rem;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+
+.header-menu-btn:hover { background: rgba(255,255,255,.07); }
+
+@media (max-width: 767px) {
+  .header-menu-btn { display: flex; }
+}
+
+.hamburger-line {
+  display: block;
+  height: 2px;
+  width: 20px;
+  background: var(--color-muted);
+  border-radius: 2px;
+  transition: background var(--transition);
+}
+
+.header-menu-btn:hover .hamburger-line { background: var(--color-text); }
+
+/* ── Page title ──────────────────────────────────────────── */
+.header-title {
+  flex: 1;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Right side ──────────────────────────────────────────── */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.header-user-name {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hide the name on small screens, keep the badge */
+@media (max-width: 480px) {
+  .header-user-name { display: none; }
+}
+
+/* ── Logout button ───────────────────────────────────────── */
+.header-logout-btn {
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: border-color var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+
+.header-logout-btn:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}

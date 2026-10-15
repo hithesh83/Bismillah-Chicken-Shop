@@ -1,67 +1,58 @@
 import { useEffect, useState } from 'react'
+import LoginPage from './LoginPage'
+import AppShell  from './components/layout/AppShell.jsx'
 import './App.css'
 
+/**
+ * App.jsx — root component.
+ *
+ * Manages the top-level auth state (user object or null).
+ *
+ * Flow:
+ *   1. On mount → GET /api/auth/me to restore session from cookie.
+ *   2. If valid cookie → show AppShell (sidebar + header + page content).
+ *   3. If no session → show LoginPage.
+ *   4. LoginPage calls onLoginSuccess(user) → set user → show AppShell.
+ *   5. AppShell's Header logout button calls handleLogout →
+ *      POST /api/auth/logout → clear user → show LoginPage.
+ */
 function App() {
-  // ── Backend health-check state ─────────────────────────────
-  const [health, setHealth] = useState({ status: 'checking…', timestamp: '' })
-  const [error, setError] = useState(null)
+  const [user,        setUser]        = useState(null)
+  const [authChecked, setAuthChecked] = useState(false)
 
+  // ── Restore session on page load ─────────────────────────
   useEffect(() => {
-    // Calls GET /api/health — forwarded to Express by the Vite proxy
-    fetch('/api/health')
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
-      .then((data) => setHealth(data))
-      .catch((err) => setError(err.message))
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => { if (data?.user) setUser(data.user) })
+      .catch(() => {/* no session */})
+      .finally(() => setAuthChecked(true))
   }, [])
 
-  return (
-    <div className="container">
-      {/* ── Header ── */}
-      <header className="header">
-        <div className="logo">🍗</div>
-        <h1>Bismillah Chicken Shop</h1>
-        <p className="subtitle">Management System</p>
-      </header>
+  // ── Logout ────────────────────────────────────────────────
+  async function handleLogout() {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' })
+    } catch { /* ignore */ }
+    setUser(null)
+  }
 
-      {/* ── Backend Status Card ── */}
-      <section className="card">
-        <h2>Backend Status</h2>
+  // ── Loading ───────────────────────────────────────────────
+  if (!authChecked) {
+    return (
+      <div className="auth-checking">
+        <span className="auth-spinner" aria-label="Loading…" />
+      </div>
+    )
+  }
 
-        {error ? (
-          <div className="status-badge error">
-            ⚠️ Cannot reach backend — is the server running?
-            <br />
-            <small>{error}</small>
-          </div>
-        ) : (
-          <div className="status-badge ok">
-            ✅ {health.status}
-            {health.timestamp && (
-              <small> — {new Date(health.timestamp).toLocaleTimeString()}</small>
-            )}
-          </div>
-        )}
-      </section>
+  // ── Unauthenticated ───────────────────────────────────────
+  if (!user) {
+    return <LoginPage onLoginSuccess={setUser} />
+  }
 
-      {/* ── Phase Roadmap ── */}
-      <section className="card">
-        <h2>Development Roadmap</h2>
-        <ul className="roadmap">
-          <li className="done">✅ Phase 1 – Project scaffold (current)</li>
-          <li>⏳ Phase 2 – Database connection (Supabase)</li>
-          <li>⏳ Phase 3 – Authentication</li>
-          <li>⏳ Phase 4 – Business features</li>
-        </ul>
-      </section>
-
-      <footer className="footer">
-        Built with React + Vite + Express
-      </footer>
-    </div>
-  )
+  // ── Authenticated ─────────────────────────────────────────
+  return <AppShell user={user} onLogout={handleLogout} />
 }
 
 export default App

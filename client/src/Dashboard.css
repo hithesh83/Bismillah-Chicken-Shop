@@ -1,0 +1,192 @@
+/* ── Layout ──────────────────────────────────────────────── */
+.dash-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+
+/* ── Top nav ─────────────────────────────────────────────── */
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 60px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dash-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.dash-brand-name {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .dash-brand-name { display: block; }
+}
+
+/* ── User bar ────────────────────────────────────────────── */
+.dash-user-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dash-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.dash-user-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-role-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Logout button ───────────────────────────────────────── */
+.dash-logout-btn {
+  padding: 0.45rem 1rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-muted);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.dash-logout-btn:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+/* ── Main content ────────────────────────────────────────── */
+.dash-main {
+  flex: 1;
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeSlideUp 0.3s ease both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.dash-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+}
+
+/* ── Welcome card ────────────────────────────────────────── */
+.dash-welcome {
+  background: linear-gradient(135deg, #1a1d27 0%, #22253a 100%);
+  border-color: rgba(245, 166, 35, 0.2);
+}
+
+.dash-welcome-title {
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.dash-welcome-sub {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.dash-welcome-sub strong {
+  color: var(--color-accent);
+}
+
+/* ── Section titles ──────────────────────────────────────── */
+.dash-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+/* ── Roadmap ─────────────────────────────────────────────── */
+.dash-roadmap {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dash-roadmap li {
+  padding: 0.55rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.dash-roadmap li.done {
+  color: var(--color-ok);
+  background: rgba(34, 197, 94, 0.07);
+}
+
+/* ── Session info ────────────────────────────────────────── */
+.dash-session-info {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+}
+
+.dash-session-info dt {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  align-self: center;
+}
+
+.dash-session-info dd {
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+

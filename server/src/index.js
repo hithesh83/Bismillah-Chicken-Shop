@@ -1,52 +1,38 @@
-import 'dotenv/config'
-import express from 'express'
-import cors from 'cors'
+/**
+ * server/src/index.js
+ *
+ * Server entry point.
+ * Imports the Express app from app.js, binds to PORT, handles graceful shutdown.
+ * Tests import app.js directly (not this file) to avoid port conflicts.
+ */
 
-// ── App setup ──────────────────────────────────────────────
-const app = express()
+import dotenv from 'dotenv'
+dotenv.config({ path: new URL('../../.env', import.meta.url) })
+
+import http from 'http'
+import app from './app.js'
+import { closePool } from './db/pool.js'
+
 const PORT = process.env.PORT || 5001
 
-// ── Middleware ─────────────────────────────────────────────
-// parse incoming JSON bodies
-app.use(express.json())
+const server = http.createServer(app)
 
-// CORS – in production you would restrict origins; for dev we allow all
-app.use(cors())
-
-// ── Routes ─────────────────────────────────────────────────
-
-/**
- * GET /api/health
- * Simple health-check endpoint so the frontend (and monitoring tools)
- * can confirm the backend is running without needing a database.
- */
-app.get('/api/health', (_req, res) => {
-  res.json({
-    status: 'Backend is running ✅',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-  })
-})
-
-// ── 404 handler ────────────────────────────────────────────
-// Catches any route that hasn't been matched above
-app.use((_req, res) => {
-  res.status(404).json({ error: 'Route not found' })
-})
-
-// ── Global error handler ───────────────────────────────────
-// Express recognises a 4-argument middleware as an error handler
-// eslint-disable-next-line no-unused-vars
-app.use((err, _req, res, _next) => {
-  console.error('[ERROR]', err.stack)
-  res.status(500).json({
-    error: 'Internal server error',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined,
-  })
-})
-
-// ── Start ──────────────────────────────────────────────────
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`)
-  console.log(`   Health check → http://localhost:${PORT}/api/health`)
+  console.log(`   Health → http://localhost:${PORT}/api/health`)
+  console.log(`   Login  → POST http://localhost:${PORT}/api/auth/login`)
+  console.log(`   Me     → GET  http://localhost:${PORT}/api/auth/me`)
 })
+
+// ── Graceful shutdown ──────────────────────────────────────
+async function shutdown(signal) {
+  console.log(`\n[server] Received ${signal}. Shutting down gracefully...`)
+  server.close(async () => {
+    await closePool()
+    console.log('[server] Shutdown complete.')
+    process.exit(0)
+  })
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'))
+process.on('SIGINT',  () => shutdown('SIGINT'))
