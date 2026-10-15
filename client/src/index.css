@@ -1,0 +1,32 @@
+/* ── Google Font ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Design Tokens ───────────────────────────────────────── */
+:root {
+  --color-bg:        #0f1117;
+  --color-surface:   #1a1d27;
+  --color-border:    #2a2d3e;
+  --color-accent:    #f5a623;   /* warm amber — brand colour */
+  --color-text:      #e8eaf0;
+  --color-muted:     #8b8fa8;
+  --color-ok:        #22c55e;
+  --color-error:     #ef4444;
+
+  --radius:   12px;
+  --shadow:   0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  line-height: 1.6;
+}

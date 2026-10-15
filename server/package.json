@@ -1,0 +1,16 @@
+{
+  "name": "bismillah-server",
+  "version": "0.1.0",
+  "description": "Express backend for Bismillah Chicken Shop Management System",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
