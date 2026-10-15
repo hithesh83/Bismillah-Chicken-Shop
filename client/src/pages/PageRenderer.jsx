@@ -11,6 +11,7 @@
 import { canAccess, NAV_ITEMS } from '../router.js'
 
 import DashboardPage      from './DashboardPage.jsx'
+import ProductsPage       from './ProductsPage.jsx'
 import ChickenLoadsPage   from './ChickenLoadsPage.jsx'
 import DailyPricesPage    from './DailyPricesPage.jsx'
 import RemainingStockPage from './RemainingStockPage.jsx'
@@ -25,6 +26,7 @@ import './pages.css'
 
 const PAGE_MAP = {
   'dashboard':       DashboardPage,
+  'products':        ProductsPage,
   'chicken-loads':   ChickenLoadsPage,
   'daily-prices':    DailyPricesPage,
   'remaining-stock': RemainingStockPage,

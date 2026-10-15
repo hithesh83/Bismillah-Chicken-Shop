@@ -11,7 +11,7 @@
     "db:status": "node src/db/migrate.js --status",
     "db:verify": "node src/db/verify.js",
     "admin:provision": "node scripts/provision-admin.js",
-    "test": "node --test tests/schema.test.js tests/auth.test.js"
+    "test": "node --test tests/schema.test.js tests/auth.test.js tests/products.test.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

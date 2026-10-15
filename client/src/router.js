@@ -33,12 +33,19 @@ export const NAV_ITEMS = [
 
   // ── Stock ─────────────────────────────────────────────────
   {
+    id:      'products',
+    label:   'Products',
+    icon:    '🗂️',
+    hash:    '#/products',
+    roles:   [],
+    section: 'Stock',
+  },
+  {
     id:      'chicken-loads',
     label:   'Chicken Loads',
     icon:    '🐔',
     hash:    '#/chicken-loads',
     roles:   [],
-    section: 'Stock',
   },
   {
     id:      'daily-prices',

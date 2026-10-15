@@ -13,7 +13,9 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { readEnvOptional } from './config.js'
-import authRouter from './routes/auth.js'
+import authRouter        from './routes/auth.js'
+import productsRouter    from './routes/products.js'
+import dailyPricesRouter from './routes/dailyPrices.js'
 
 const app = express()
 
@@ -63,6 +65,22 @@ app.get('/api/db-status', (_req, res) => {
 // GET  /api/auth/me
 // GET  /api/auth/admin-ping  (admin-only test route)
 app.use('/api/auth', authRouter)
+
+// ── Products routes ────────────────────────────────────────
+// GET    /api/products               — list (all roles)
+// GET    /api/products/:id           — single + price history (all roles)
+// POST   /api/products               — create (admin)
+// PATCH  /api/products/:id           — update name/category/notes (admin)
+// PATCH  /api/products/:id/status    — activate / deactivate (admin)
+app.use('/api/products', productsRouter)
+
+// ── Daily prices routes ────────────────────────────────────
+// GET  /api/daily-prices             — list with filters (all roles)
+// GET  /api/daily-prices/today       — today's prices for all active products
+// GET  /api/daily-prices/:pid/history — price history for one product
+// POST /api/daily-prices             — set price for a date (admin)
+// DELETE /api/daily-prices/:id       — remove future price (admin)
+app.use('/api/daily-prices', dailyPricesRouter)
 
 // ── 404 handler ────────────────────────────────────────────
 app.use((_req, res) => {
