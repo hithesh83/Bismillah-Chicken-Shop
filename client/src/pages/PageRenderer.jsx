@@ -22,6 +22,7 @@ import OutstandingPage    from './OutstandingPage.jsx'
 import ReportsPage        from './ReportsPage.jsx'
 import UserManagementPage from './UserManagementPage.jsx'
 import SettingsPage       from './SettingsPage.jsx'
+import ErrorBoundary      from '../components/ui/ErrorBoundary.jsx'
 import './pages.css'
 
 const PAGE_MAP = {
@@ -58,5 +59,9 @@ export default function PageRenderer({ routeId, user, addToast }) {
   }
 
   const Page = PAGE_MAP[routeId] ?? DashboardPage
-  return <Page user={user} addToast={addToast} />
+  return (
+    <ErrorBoundary key={routeId}>
+      <Page user={user} addToast={addToast} />
+    </ErrorBoundary>
+  )
 }

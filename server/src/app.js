@@ -13,9 +13,16 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { readEnvOptional } from './config.js'
-import authRouter        from './routes/auth.js'
-import productsRouter    from './routes/products.js'
-import dailyPricesRouter from './routes/dailyPrices.js'
+import authRouter          from './routes/auth.js'
+import productsRouter      from './routes/products.js'
+import dailyPricesRouter   from './routes/dailyPrices.js'
+import chickenLoadsRouter  from './routes/chickenLoads.js'
+import stockEntriesRouter from './routes/stockEntries.js'
+import customersRouter    from './routes/customers.js'
+import salesRouter        from './routes/sales.js'
+import paymentsRouter     from './routes/payments.js'
+import outstandingRouter, { getCustomerStatement } from './routes/outstanding.js'
+import { requireAuth }    from './auth/middleware.js'
 
 const app = express()
 
@@ -81,6 +88,55 @@ app.use('/api/products', productsRouter)
 // POST /api/daily-prices             — set price for a date (admin)
 // DELETE /api/daily-prices/:id       — remove future price (admin)
 app.use('/api/daily-prices', dailyPricesRouter)
+
+// ── Chicken loads routes ───────────────────────────────────
+// GET   /api/chicken-loads             — paginated list with filters (all roles)
+// GET   /api/chicken-loads/:id         — single load detail + corrections + audit
+// POST  /api/chicken-loads             — create a new load (staff + admin)
+// PATCH /api/chicken-loads/:id/stock   — update remaining stock (staff + admin)
+// POST  /api/chicken-loads/:id/correct — admin correction workflow (admin only)
+app.use('/api/chicken-loads', chickenLoadsRouter)
+
+// ── Remaining Stock / Stock observations routes ─────────────
+// GET  /api/stock-entries/latest       — latest readings for all active products
+// GET  /api/stock-entries              — history with filters (date range, product, category)
+// GET  /api/stock-entries/:id          — single observation detail, corrections, & audit
+// POST /api/stock-entries              — record manual observation (Staff + Admin)
+// POST /api/stock-entries/:id/correct  — authorized correction (Admin only)
+app.use('/api/stock-entries', stockEntriesRouter)
+app.use('/api/remaining-stock', stockEntriesRouter)
+
+// ── Customers / Parties routes ─────────────────────────────
+// GET   /api/customers            — list with search (name, party_code, phone) & filters
+// GET   /api/customers/:id        — single customer details, opening balance, & audit
+// POST  /api/customers            — create customer profile + auditable opening balance
+// PUT   /api/customers/:id        — update customer details / opening balance
+// PATCH /api/customers/:id/status — activate / deactivate customer (Admin only)
+app.use('/api/customers', customersRouter)
+app.use('/api/parties',   customersRouter)
+
+// ── Sales routes ───────────────────────────────────────────
+// GET   /api/sales          — list sales with search, date range, type, & payment status
+// GET   /api/sales/:id      — single sale detail, line items, payments, & audit trail
+// POST  /api/sales          — create sale (multi-item, walk-in or credit/party, initial payment)
+// POST  /api/sales/:id/void — void confirmed sale (Admin only)
+app.use('/api/sales', salesRouter)
+
+// ── Payments routes ────────────────────────────────────────
+// GET  /api/payments             — list payment receipts with search & filters
+// GET  /api/payments/:id         — single payment detail, allocations, & audit
+// POST /api/payments             — record payment receipt (FIFO, specific, or advance)
+// POST /api/payments/:id/void    — authorized void (Admin only)
+app.use('/api/payments', paymentsRouter)
+
+// ── Outstanding & Customer Ledger routes ───────────────────
+// GET /api/outstanding                    — customer balances with search & filters
+// GET /api/outstanding/:party_id/invoices — open unpaid credit invoices
+// GET /api/ledger/:party_id               — chronological statement with running balance
+// GET /api/customers/:id/statement        — customer statement alias
+app.use('/api/outstanding', outstandingRouter)
+app.use('/api/ledger', outstandingRouter)
+app.get('/api/customers/:id/statement', requireAuth, getCustomerStatement)
 
 // ── 404 handler ────────────────────────────────────────────
 app.use((_req, res) => {
