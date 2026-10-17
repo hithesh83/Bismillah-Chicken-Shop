@@ -327,9 +327,6 @@ export default function ReportsPage({ user, addToast }) {
               <span>{reportPeriod.label || 'Selected Period'}</span>
             </span>
           </div>
-          <p className="page-subtitle">
-            Financial reconciliation, live dressing wastage, product revenue, and customer period-end outstanding.
-          </p>
         </div>
 
         <div className="reports-header-actions">
@@ -834,9 +831,7 @@ export default function ReportsPage({ user, addToast }) {
             <h2 id="collections-breakdown-heading" className="report-section-title">
               <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Wallet size={18} /></span> Collections Received by Payment Method
             </h2>
-            <span className="report-kpi-subtext">
-              Zero double-counting: reflects actual cash and digital transfers received
-            </span>
+
           </div>
 
           {collections.by_method?.length === 0 ? (
@@ -890,9 +885,7 @@ export default function ReportsPage({ user, addToast }) {
               <h2 id="outstanding-breakdown-heading" className="report-section-title">
                 <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><CircleAlert size={18} /></span> Period-End Customer Outstanding (As of {reportPeriod.endDate})
               </h2>
-              <p className="page-subtitle">
-                Point-in-time calculation: Opening Balance + Credit Sales through {reportPeriod.endDate} - Payments through {reportPeriod.endDate} ± Adjustments.
-              </p>
+
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -991,9 +984,7 @@ export default function ReportsPage({ user, addToast }) {
               <h2 id="loads-breakdown-heading" className="report-section-title">
                 <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Truck size={18} /></span> Chicken Processing & Wastage Breakdown
               </h2>
-              <p className="page-subtitle">
-                Weighted aggregate wastage: <code>((SUM(live) - SUM(dressed)) / SUM(live)) * 100</code>
-              </p>
+
             </div>
           </div>
 
@@ -1071,9 +1062,7 @@ export default function ReportsPage({ user, addToast }) {
               <h2 id="stock-breakdown-heading" className="report-section-title">
                 <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Boxes size={18} /></span> Manual Physical Stock Observations
               </h2>
-              <p className="page-subtitle">
-                Actual physical inventory checks recorded by staff and admin during this period.
-              </p>
+
             </div>
           </div>
 

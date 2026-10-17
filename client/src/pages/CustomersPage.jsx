@@ -274,23 +274,7 @@ export default function CustomersPage({ user, addToast }) {
       {/* ── Page Header ────────────────────────────────────────── */}
       <div className="page-header">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-            <h2 className="page-title" id="customers-page-title">Customer Management</h2>
-            <span
-              style={{
-                fontSize: 'var(--text-xs)',
-                fontWeight: 700,
-                padding: '0.2rem 0.6rem',
-                borderRadius: '999px',
-                background: 'rgba(16, 185, 129, 0.12)',
-                color: '#059669',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-              }}
-            >
-              Auditable Ledger Accounts
-            </span>
-          </div>
+          <h2 className="page-title" id="customers-page-title">Customer Management</h2>
           <p className="page-subtitle">
             Hotels, party buyers, and regular credit customer profiles with auditable opening balances.
           </p>
@@ -307,23 +291,6 @@ export default function CustomersPage({ user, addToast }) {
         </div>
       </div>
 
-      {/* ── Disambiguation & Walk-In Notice ─────────────────────── */}
-      <div
-        className="card"
-        style={{
-          background: 'rgba(37, 99, 235, 0.05)',
-          borderColor: 'rgba(37, 99, 235, 0.25)',
-          padding: '0.85rem 1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.85rem',
-        }}
-      >
-        <span style={{ display: 'inline-flex', alignItems: 'center' }}><UsersRound size={22} /></span>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', lineHeight: 1.5 }}>
-          <strong style={{ color: 'var(--color-text)' }}>Disambiguation & Cash Customer Rules:</strong> Multiple customers may share identical business names (e.g. multiple <em>Taj Hotel</em>s). The <strong>Party ID</strong> and <strong>Address/Location</strong> are displayed together to eliminate confusion. Walk-in cash customers do not require a profile.
-        </div>
-      </div>
 
       {/* ── Summary Stats ──────────────────────────────────────── */}
       {summary && (
@@ -448,14 +415,14 @@ export default function CustomersPage({ user, addToast }) {
             <table>
               <thead>
                 <tr>
-                  <th>Party ID</th>
-                  <th>Customer Name & Location (Disambiguation)</th>
-                  <th>Customer Type</th>
-                  <th>Phone</th>
-                  <th>Credit Status</th>
-                  <th>Opening Balance</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Party ID</th>
+                  <th>Customer Name & Location</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Customer Type</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Phone</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Credit Status</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Opening Balance</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Status</th>
+                  <th style={{ whiteSpace: 'nowrap' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -467,7 +434,7 @@ export default function CustomersPage({ user, addToast }) {
                       style={!party.is_active ? { opacity: 0.6, background: 'rgba(239, 68, 68, 0.03)' } : {}}
                     >
                       {/* Party ID */}
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         <span
                           style={{
                             fontFamily: 'monospace',
@@ -475,8 +442,10 @@ export default function CustomersPage({ user, addToast }) {
                             color: 'var(--color-accent)',
                             fontSize: 'var(--text-sm)',
                             background: 'var(--color-accent-dim)',
-                            padding: '0.2rem 0.5rem',
+                            padding: '0.25rem 0.6rem',
                             borderRadius: '4px',
+                            display: 'inline-block',
+                            whiteSpace: 'nowrap',
                           }}
                         >
                           {party.party_code}
@@ -497,17 +466,19 @@ export default function CustomersPage({ user, addToast }) {
                       </td>
 
                       {/* Customer Type */}
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         <span
                           style={{
                             fontSize: 'var(--text-xs)',
                             fontWeight: 700,
                             color: typeCfg.color,
                             background: typeCfg.bg,
-                            padding: '0.2rem 0.55rem',
+                            padding: '0.25rem 0.6rem',
                             borderRadius: '999px',
                             textTransform: 'uppercase',
                             letterSpacing: '0.04em',
+                            display: 'inline-block',
+                            whiteSpace: 'nowrap',
                           }}
                         >
                           {typeCfg.label}
@@ -515,14 +486,14 @@ export default function CustomersPage({ user, addToast }) {
                       </td>
 
                       {/* Phone */}
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         <span style={{ fontSize: 'var(--text-xs)', fontFamily: 'monospace' }}>
                           {party.phone || '—'}
                         </span>
                       </td>
 
                       {/* Credit Status */}
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         {party.credit_enabled ? (
                           <span
                             style={{
@@ -530,8 +501,10 @@ export default function CustomersPage({ user, addToast }) {
                               fontWeight: 700,
                               color: 'var(--color-ok)',
                               background: 'rgba(16, 185, 129, 0.12)',
-                              padding: '0.2rem 0.5rem',
+                              padding: '0.25rem 0.6rem',
                               borderRadius: '999px',
+                              display: 'inline-block',
+                              whiteSpace: 'nowrap',
                             }}
                           >
                             Credit Allowed
@@ -542,8 +515,10 @@ export default function CustomersPage({ user, addToast }) {
                               fontSize: 'var(--text-xs)',
                               color: 'var(--color-muted)',
                               background: 'rgba(100, 116, 139, 0.1)',
-                              padding: '0.2rem 0.5rem',
+                              padding: '0.25rem 0.6rem',
                               borderRadius: '999px',
+                              display: 'inline-block',
+                              whiteSpace: 'nowrap',
                             }}
                           >
                             Cash Only
@@ -552,23 +527,23 @@ export default function CustomersPage({ user, addToast }) {
                       </td>
 
                       {/* Opening Balance */}
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         <span style={{ fontWeight: 700, fontSize: 'var(--text-sm)', color: party.opening_balance > 0 ? '#b45309' : 'var(--color-text)' }}>
                           {fmtCurrency(party.opening_balance)}
                         </span>
                       </td>
 
                       {/* Active / Inactive Status */}
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         <StatusBadge status={party.is_active ? 'active' : 'inactive'} />
                       </td>
 
                       {/* Actions */}
-                      <td>
-                        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                      <td style={{ whiteSpace: 'nowrap' }}>
+                        <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', whiteSpace: 'nowrap' }}>
                           <button
                             className="btn btn-secondary"
-                            style={{ fontSize: 'var(--text-xs)', padding: '0.25rem 0.55rem' }}
+                            style={{ fontSize: 'var(--text-xs)', padding: '0.25rem 0.55rem', whiteSpace: 'nowrap' }}
                             onClick={() => openDetailModal(party)}
                             id={`view-party-${party.party_code}`}
                             title="View audit trail and ledger balance"
@@ -577,7 +552,7 @@ export default function CustomersPage({ user, addToast }) {
                           </button>
                           <button
                             className="btn btn-secondary"
-                            style={{ fontSize: 'var(--text-xs)', padding: '0.25rem 0.55rem' }}
+                            style={{ fontSize: 'var(--text-xs)', padding: '0.25rem 0.55rem', whiteSpace: 'nowrap' }}
                             onClick={() => openEditModal(party)}
                             id={`edit-party-${party.party_code}`}
                           >
@@ -591,6 +566,7 @@ export default function CustomersPage({ user, addToast }) {
                                 padding: '0.25rem 0.55rem',
                                 color: party.is_active ? 'var(--color-error)' : 'var(--color-ok)',
                                 borderColor: party.is_active ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)',
+                                whiteSpace: 'nowrap',
                               }}
                               id={`toggle-status-${party.party_code}`}
                               onClick={() => setStatusModal({ party, newStatus: !party.is_active })}

@@ -16,7 +16,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
-import { Scale, Boxes, ScrollText } from '../components/ui/Icons.jsx'
+import { Boxes, ScrollText } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Date and Format Helpers ─────────────────────────────────
@@ -353,23 +353,6 @@ export default function RemainingStockPage({ user, addToast }) {
         </div>
       </div>
 
-      {/* ── Guidance Banner ────────────────────────────────────── */}
-      <div
-        className="card"
-        style={{
-          background: 'rgba(59, 130, 246, 0.05)',
-          borderColor: 'rgba(59, 130, 246, 0.25)',
-          padding: '0.85rem 1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.85rem',
-        }}
-      >
-        <span style={{ display: 'inline-flex', alignItems: 'center' }}><Scale size={22} /></span>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', lineHeight: 1.5 }}>
-          <strong style={{ color: 'var(--color-text)' }}>Audit & Physical Integrity Notice:</strong> Every recorded reading is an immutable historical observation. Entering a new reading will <em>not</em> overwrite previous counts taken earlier today. Authorized corrections by Administrators create linked correction entries with full audit logs.
-        </div>
-      </div>
 
       {/* ── Latest Readings Cards ──────────────────────────────── */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

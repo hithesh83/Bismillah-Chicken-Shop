@@ -135,9 +135,7 @@ export default function DashboardPage({ user, addToast }) {
               <span>Shop Time: {data?.date ? fmtDate(data.date) : 'Today'} (IST)</span>
             </span>
           </div>
-          <p className="page-subtitle">
-            Real-time operations, daily chicken dressing, physical stock, and customer ledger reconciliation.
-          </p>
+
         </div>
 
         <div className="dash-header-actions">
@@ -322,12 +320,6 @@ export default function DashboardPage({ user, addToast }) {
               </div>
             </div>
 
-            <p className="dash-formula-note">
-              <span><Info size={14} /></span>
-              <span>
-                Calculated strictly via weighted formula: <code>((Sum Live - Sum Dressed) / Sum Live) * 100</code>. Never averaged.
-              </span>
-            </p>
           </div>
         )}
       </section>
@@ -340,9 +332,7 @@ export default function DashboardPage({ user, addToast }) {
               <span><Boxes size={18} /></span>
               <span>Latest Manual Stock Observations</span>
             </h2>
-            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', marginTop: '0.2rem' }}>
-              Physical inventory only ({stock.total_observed_kg ? fmtKg(stock.total_observed_kg) : '0.000 kg'} total observed across {stock.observed_products_count ?? 0} of {stock.total_products_count ?? 0} active products)
-            </p>
+
           </div>
           <a href="#/remaining-stock" className="dash-card-action-link">
             <span>Stock Observations</span>

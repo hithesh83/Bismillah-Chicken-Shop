@@ -469,23 +469,7 @@ export default function SalesPage({ user, addToast }) {
       {/* ── Page Header ────────────────────────────────────────── */}
       <div className="page-header">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-            <h2 className="page-title" id="sales-page-title">Sales Management</h2>
-            <span
-              style={{
-                fontSize: 'var(--text-xs)',
-                fontWeight: 700,
-                padding: '0.2rem 0.6rem',
-                borderRadius: '999px',
-                background: 'rgba(5, 150, 105, 0.12)',
-                color: '#059669',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-              }}
-            >
-              Real-time Invoicing & Ledger
-            </span>
-          </div>
+          <h2 className="page-title" id="sales-page-title">Sales Management</h2>
           <p className="page-subtitle">
             Counter cash sales and hotel/party credit billing with immutable historical line rates.
           </p>
@@ -496,7 +480,7 @@ export default function SalesPage({ user, addToast }) {
             className="btn btn-primary"
             id="walkin-sale-btn"
             onClick={openWalkInModal}
-            style={{ background: '#059669', borderColor: '#059669' }}
+            style={{ background: '#a95d06', borderColor: '#a95d06' }}
           >
             Fast Walk-In Sale
           </button>
@@ -510,23 +494,6 @@ export default function SalesPage({ user, addToast }) {
         </div>
       </div>
 
-      {/* ── Guidance Banner ────────────────────────────────────── */}
-      <div
-        className="card"
-        style={{
-          background: 'rgba(5, 150, 105, 0.05)',
-          borderColor: 'rgba(5, 150, 105, 0.25)',
-          padding: '0.85rem 1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.85rem',
-        }}
-      >
-        <span style={{ display: 'inline-flex', alignItems: 'center' }}><ReceiptText size={22} /></span>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', lineHeight: 1.5 }}>
-          <strong style={{ color: 'var(--color-text)' }}>Price Immutability & Financial Math:</strong> Each line item captures the exact rate per kg charged at sale time. Updating daily prices later will <em>never</em> alter historical bills. Immediate payments are atomically recorded in the payment ledger without double-counting.
-        </div>
-      </div>
 
       {/* ── Summary Stats ──────────────────────────────────────── */}
       {summary && (

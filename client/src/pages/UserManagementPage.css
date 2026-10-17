@@ -39,6 +39,10 @@
 .user-summary-icon {
   font-size: 1.85rem;
   line-height: 1;
+  color: #000435;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-summary-details {
@@ -358,56 +362,3 @@
   color: var(--color-muted);
 }
 
-/* ── Audit Timeline ────────────────────────────────────────── */
-.audit-timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  max-height: 380px;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-}
-
-.audit-item {
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem 1.1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.audit-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--text-xs);
-}
-
-.audit-action-badge {
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--color-primary);
-  letter-spacing: 0.05em;
-}
-
-.audit-timestamp {
-  color: var(--color-muted);
-}
-
-.audit-actor {
-  font-size: var(--text-xs);
-  color: var(--color-text);
-}
-
-.audit-meta-json {
-  font-family: monospace;
-  font-size: 11px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-subtle);
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  color: var(--color-muted);
-  word-break: break-all;
-}

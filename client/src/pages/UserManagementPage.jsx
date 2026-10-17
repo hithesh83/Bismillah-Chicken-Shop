@@ -26,7 +26,6 @@ import {
   Pencil,
   Shield,
   Key,
-  ScrollText,
   CircleX,
   CircleCheck,
   TriangleAlert,
@@ -72,9 +71,6 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
   const [roleUser, setRoleUser] = useState(null)
   const [resetUser, setResetUser] = useState(null)
   const [statusUser, setStatusUser] = useState(null)
-  const [auditUser, setAuditUser] = useState(null)
-  const [auditLogs, setAuditLogs] = useState([])
-  const [loadingAudit, setLoadingAudit] = useState(false)
 
   // Submitting flags
   const [submitting, setSubmitting] = useState(false)
@@ -119,21 +115,6 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
     fetchUsers()
   }, [fetchUsers])
 
-  // View user audit details
-  const handleOpenAudit = async (u) => {
-    setAuditUser(u)
-    setLoadingAudit(true)
-    try {
-      const res = await fetch(`/api/users/${u.id}`, { credentials: 'include' })
-      if (!res.ok) throw new Error('Failed to load audit history.')
-      const data = await res.json()
-      setAuditLogs(data.audit || [])
-    } catch (err) {
-      if (addToast) addToast({ type: 'error', message: err.message })
-    } finally {
-      setLoadingAudit(false)
-    }
-  }
 
   // ── Handlers ────────────────────────────────────────────────
   const handleCreateSubmit = async (e) => {
@@ -482,14 +463,6 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                           <Key size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Reset Pass
                         </button>
 
-                        <button
-                          type="button"
-                          className="btn-table-action"
-                          onClick={() => handleOpenAudit(u)}
-                          title="View Details & Audit Trail"
-                        >
-                          <ScrollText size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Audit
-                        </button>
 
                         <button
                           type="button"
@@ -585,7 +558,6 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                     minLength={8}
                     disabled={submitting}
                   />
-                  <span className="form-hint">Hashed with bcrypt (cost 12). Never stored in plaintext.</span>
                 </div>
               </div>
 
@@ -866,69 +838,6 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
         </div>
       )}
 
-      {/* ── Modal: User Audit Trail ─────────────────────────────── */}
-      {auditUser && (
-        <div className="modal-overlay" onClick={() => setAuditUser(null)}>
-          <div className="modal-dialog" style={{ maxWidth: '640px' }} onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2 className="modal-title"><span><ScrollText size={18} /></span> Account Audit Trail</h2>
-              <button
-                type="button"
-                className="modal-close-btn"
-                onClick={() => setAuditUser(null)}
-              >
-                <X size={16} />
-              </button>
-            </div>
-            <div className="modal-body">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', paddingBottom: '0.75rem', borderBottom: '1px solid var(--color-border)' }}>
-                <div>
-                  <h3 style={{ fontSize: 'var(--text-base)', fontWeight: '700' }}>{auditUser.display_name}</h3>
-                  <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)' }}>{auditUser.login_email}</span>
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <RoleBadge role={auditUser.role} />
-                  <StatusBadge status={auditUser.is_active ? 'active' : 'inactive'} />
-                </div>
-              </div>
-
-              {loadingAudit ? (
-                <LoadingState label="Loading audit trail…" />
-              ) : auditLogs.length === 0 ? (
-                <EmptyState title="No audit logs recorded" message="No administrative changes recorded for this user." />
-              ) : (
-                <div className="audit-timeline">
-                  {auditLogs.map((log) => (
-                    <div key={log.id} className="audit-item">
-                      <div className="audit-item-header">
-                        <span className="audit-action-badge">{log.action_type}</span>
-                        <span className="audit-timestamp">{fmtDateTime(log.event_timestamp)}</span>
-                      </div>
-                      <div className="audit-actor">
-                        By: <strong>{log.actor_name || 'System'}</strong>
-                      </div>
-                      {log.change_metadata && (
-                        <pre className="audit-meta-json">
-                          {JSON.stringify(log.change_metadata, null, 2)}
-                        </pre>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setAuditUser(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
