@@ -389,7 +389,11 @@ export async function getCustomerStatement(req, res, next) {
       const timeB = new Date(b.timestamp).getTime()
       if (timeA !== timeB) return timeA - timeB
 
-      // 4. Stable tie breaker by ID
+      // 4. On same timestamp: sales (debits) before payments (credits)
+      if (a.entry_type === 'sale' && b.entry_type === 'payment') return -1
+      if (b.entry_type === 'sale' && a.entry_type === 'payment') return 1
+
+      // 5. Stable tie breaker by ID
       return String(a.id).localeCompare(String(b.id))
     })
 

@@ -38,6 +38,7 @@ const REQUIRED_TABLES = [
   'payments',
   'payment_allocations',
   'audit_logs',
+  'app_settings',
 ]
 
 const REQUIRED_SEED_KEYS = [

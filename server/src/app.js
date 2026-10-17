@@ -22,6 +22,10 @@ import customersRouter    from './routes/customers.js'
 import salesRouter        from './routes/sales.js'
 import paymentsRouter     from './routes/payments.js'
 import outstandingRouter, { getCustomerStatement } from './routes/outstanding.js'
+import dashboardRouter   from './routes/dashboard.js'
+import reportsRouter     from './routes/reports.js'
+import usersRouter       from './routes/users.js'
+import settingsRouter    from './routes/settings.js'
 import { requireAuth }    from './auth/middleware.js'
 
 const app = express()
@@ -137,6 +141,23 @@ app.use('/api/payments', paymentsRouter)
 app.use('/api/outstanding', outstandingRouter)
 app.use('/api/ledger', outstandingRouter)
 app.get('/api/customers/:id/statement', requireAuth, getCustomerStatement)
+
+// ── Dashboard routes ───────────────────────────────────────
+// GET /api/dashboard — real-time aggregated shop KPI metrics & recent activity
+app.use('/api/dashboard', dashboardRouter)
+
+// ── Reports & Exports routes ───────────────────────────────
+// GET /api/reports        — aggregated period report
+// GET /api/reports/export — CSV report download
+app.use('/api/reports', reportsRouter)
+
+// ── User Management routes ─────────────────────────────────
+// Admin only — manage staff, managers, roles, activation, and passwords
+app.use('/api/users', usersRouter)
+
+// ── Application Settings routes ────────────────────────────
+// Read settings (authenticated) & update settings (admin only)
+app.use('/api/settings', settingsRouter)
 
 // ── 404 handler ────────────────────────────────────────────
 app.use((_req, res) => {

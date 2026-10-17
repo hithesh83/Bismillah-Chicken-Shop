@@ -22,7 +22,21 @@ export function useToast() {
     setToasts(prev => prev.filter(t => t.id !== id))
   }, [])
 
-  const addToast = useCallback(({ message, type = 'info', duration = 4000 }) => {
+  const addToast = useCallback((toastOrMessage, maybeType = 'info', maybeDuration = 4000) => {
+    let message = ''
+    let type = 'info'
+    let duration = 4000
+
+    if (typeof toastOrMessage === 'string') {
+      message = toastOrMessage
+      type = maybeType || 'info'
+      duration = maybeDuration
+    } else if (toastOrMessage && typeof toastOrMessage === 'object') {
+      message = toastOrMessage.message || ''
+      type = toastOrMessage.type || 'info'
+      if (toastOrMessage.duration !== undefined) duration = toastOrMessage.duration
+    }
+
     const id = nextId++
     setToasts(prev => [...prev, { id, message, type }])
     if (duration > 0) {

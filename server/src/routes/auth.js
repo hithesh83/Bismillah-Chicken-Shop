@@ -152,6 +152,83 @@ router.get('/me', requireAuth, (req, res) => {
 })
 
 /**
+ * POST /api/auth/change-password
+ * Allows the currently logged-in user to change their own password.
+ * Protected — requires valid session and verification of current password.
+ */
+router.post('/change-password', requireAuth, async (req, res, next) => {
+  try {
+    const { current_password, new_password } = req.body ?? {}
+
+    if (!current_password || typeof current_password !== 'string') {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'Current password is required.',
+      })
+    }
+
+    if (!new_password || typeof new_password !== 'string' || new_password.length < 8) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'New password must be at least 8 characters long.',
+      })
+    }
+
+    // Fetch user's current password hash
+    const { rows } = await query(
+      `SELECT password_hash FROM users WHERE id = $1 LIMIT 1`,
+      [req.user.id]
+    )
+    const user = rows[0]
+    if (!user) {
+      return res.status(404).json({ error: 'Not Found', message: 'User not found.' })
+    }
+
+    const isMatch = await bcrypt.compare(current_password, user.password_hash)
+    if (!isMatch) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'Current password is incorrect.',
+      })
+    }
+
+    if (current_password === new_password) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'New password must be different from the current password.',
+      })
+    }
+
+    const newHash = await bcrypt.hash(new_password, 12)
+
+    await query(
+      `UPDATE users
+       SET password_hash = $1,
+           failed_login_attempts = 0,
+           locked_until = NULL,
+           updated_at = NOW()
+       WHERE id = $2`,
+      [newHash, req.user.id]
+    )
+
+    // Audit log without password
+    await query(
+      `INSERT INTO audit_logs (actor_id, action_type, entity_type, entity_id, change_metadata)
+       VALUES ($1, 'UPDATE', 'user', $2, $3)`,
+      [
+        req.user.id,
+        req.user.id,
+        JSON.stringify({ action: 'password_change_by_user', timestamp: new Date().toISOString() }),
+      ]
+    )
+
+    return res.json({ message: 'Password changed successfully.' })
+  } catch (err) {
+    next(err)
+  }
+})
+
+/**
  * GET /api/auth/admin-ping
  * Admin-only test route — verifies RBAC is working.
  * Returns 200 for admins, 403 for other roles, 401 for unauthenticated.

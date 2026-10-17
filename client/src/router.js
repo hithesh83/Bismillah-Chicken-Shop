@@ -99,7 +99,7 @@ export const NAV_ITEMS = [
     label:   'Reports',
     icon:    '📈',
     hash:    '#/reports',
-    roles:   [],
+    roles:   ['admin', 'manager'],
     section: 'Reports',
   },
 

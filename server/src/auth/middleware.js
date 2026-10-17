@@ -21,11 +21,13 @@
 
 import { verifyToken, COOKIE_NAME } from './tokens.js'
 
+import { query } from '../db/pool.js'
+
 /**
- * requireAuth — verifies the JWT cookie and populates req.user.
- * Returns 401 if no valid token is present.
+ * requireAuth — verifies the JWT cookie and confirms the user account is active in the database.
+ * Returns 401 if no valid token is present or if the account has been deactivated.
  */
-export function requireAuth(req, res, next) {
+export async function requireAuth(req, res, next) {
   const token = req.cookies?.[COOKIE_NAME]
 
   if (!token) {
@@ -35,22 +37,41 @@ export function requireAuth(req, res, next) {
     })
   }
 
+  let payload
   try {
-    const payload = verifyToken(token)
-    // Attach a minimal user object — never the full DB row
-    req.user = {
-      id:    payload.sub,
-      role:  payload.role,
-      email: payload.email,
-      name:  payload.name,
-    }
-    next()
+    payload = verifyToken(token)
   } catch (err) {
     // jwt.verify throws for expired or tampered tokens
     return res.status(401).json({
       error: 'Unauthenticated',
       message: 'Your session has expired. Please log in again.',
     })
+  }
+
+  try {
+    // Verify user exists and is active in database (invalidates sessions of deactivated users)
+    const { rows } = await query(
+      `SELECT id, role, display_name, login_email, is_active FROM users WHERE id = $1 LIMIT 1`,
+      [payload.sub]
+    )
+    const userRow = rows[0]
+    if (!userRow || !userRow.is_active) {
+      return res.status(401).json({
+        error: 'Unauthenticated',
+        message: 'Your account is inactive or disabled. Please contact an administrator.',
+      })
+    }
+
+    // Attach active user object with live role from DB
+    req.user = {
+      id:    userRow.id,
+      role:  userRow.role,
+      email: userRow.login_email,
+      name:  userRow.display_name,
+    }
+    next()
+  } catch (dbErr) {
+    next(dbErr)
   }
 }
 
