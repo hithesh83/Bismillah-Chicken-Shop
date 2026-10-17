@@ -13,6 +13,19 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState } from '../components/ui/UIStates.jsx'
+import {
+  MapPin,
+  RefreshCw,
+  ReceiptText,
+  Wallet,
+  UsersRound,
+  CircleAlert,
+  Truck,
+  Boxes,
+  IndianRupee,
+  TrendingUp,
+  Info,
+} from '../components/ui/Icons.jsx'
 import './pages.css'
 import './DashboardPage.css'
 
@@ -115,10 +128,10 @@ export default function DashboardPage({ user, addToast }) {
         <div>
           <div className="dash-header-title-row">
             <h1 className="page-title">
-              Welcome back, {user?.name?.split(' ')[0] ?? 'Partner'} 👋
+              Welcome back, {user?.name?.split(' ')[0] ?? 'Partner'}
             </h1>
             <span className="dash-header-badge">
-              <span>📍</span>
+              <span><MapPin size={14} /></span>
               <span>Shop Time: {data?.date ? fmtDate(data.date) : 'Today'} (IST)</span>
             </span>
           </div>
@@ -135,7 +148,7 @@ export default function DashboardPage({ user, addToast }) {
             disabled={refreshing}
             title="Refresh latest metrics from database"
           >
-            <span className={`dash-spin-icon ${refreshing ? 'spinning' : ''}`}>🔄</span>
+            <span className={`dash-spin-icon ${refreshing ? 'spinning' : ''}`}><RefreshCw size={15} /></span>
             <span>{refreshing ? 'Refreshing…' : 'Refresh'}</span>
           </button>
         </div>
@@ -149,7 +162,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-kpi-card kpi-sales">
             <div className="dash-kpi-card-header">
               <span className="dash-kpi-label">Today's Total Sales</span>
-              <span className="dash-kpi-icon">🧾</span>
+              <span className="dash-kpi-icon"><ReceiptText size={20} /></span>
             </div>
             <div className="dash-kpi-value">{fmtCurrency(finances.today_total_sales)}</div>
             <div className="dash-kpi-desc">
@@ -163,7 +176,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-kpi-card kpi-collections">
             <div className="dash-kpi-card-header">
               <span className="dash-kpi-label">Collections Received</span>
-              <span className="dash-kpi-icon">💵</span>
+              <span className="dash-kpi-icon"><Wallet size={20} /></span>
             </div>
             <div className="dash-kpi-value">{fmtCurrency(finances.today_collections_received)}</div>
             <div className="dash-kpi-desc">
@@ -175,7 +188,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-kpi-card kpi-credit">
             <div className="dash-kpi-card-header">
               <span className="dash-kpi-label">Today's Credit Sales</span>
-              <span className="dash-kpi-icon">🤝</span>
+              <span className="dash-kpi-icon"><UsersRound size={20} /></span>
             </div>
             <div className="dash-kpi-value">{fmtCurrency(finances.today_credit_sales)}</div>
             <div className="dash-kpi-desc">
@@ -187,7 +200,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-kpi-card kpi-outstanding">
             <div className="dash-kpi-card-header">
               <span className="dash-kpi-label">Total Outstanding Due</span>
-              <span className="dash-kpi-icon">⚠️</span>
+              <span className="dash-kpi-icon"><CircleAlert size={20} /></span>
             </div>
             <div className="dash-kpi-value">{fmtCurrency(outstanding.total_outstanding_amount)}</div>
             <div className="dash-kpi-desc">
@@ -202,7 +215,7 @@ export default function DashboardPage({ user, addToast }) {
         <h2 id="quick-actions-heading" className="card-title">Quick Actions</h2>
         <div className="dash-actions-grid">
           <a href="#/sales" className="dash-action-btn">
-            <span className="dash-action-icon">🧾</span>
+            <span className="dash-action-icon"><ReceiptText size={20} /></span>
             <div className="dash-action-texts">
               <span className="dash-action-title">New Sale</span>
               <span className="dash-action-hint">Walk-in or Credit</span>
@@ -210,7 +223,7 @@ export default function DashboardPage({ user, addToast }) {
           </a>
 
           <a href="#/payments" className="dash-action-btn">
-            <span className="dash-action-icon">💳</span>
+            <span className="dash-action-icon"><Wallet size={20} /></span>
             <div className="dash-action-texts">
               <span className="dash-action-title">Record Payment</span>
               <span className="dash-action-hint">Cash, UPI, or Bank</span>
@@ -218,7 +231,7 @@ export default function DashboardPage({ user, addToast }) {
           </a>
 
           <a href="#/chicken-loads" className="dash-action-btn">
-            <span className="dash-action-icon">🐔</span>
+            <span className="dash-action-icon"><Truck size={20} /></span>
             <div className="dash-action-texts">
               <span className="dash-action-title">Add Chicken Load</span>
               <span className="dash-action-hint">Live & Dressed weights</span>
@@ -226,7 +239,7 @@ export default function DashboardPage({ user, addToast }) {
           </a>
 
           <a href="#/remaining-stock" className="dash-action-btn">
-            <span className="dash-action-icon">📦</span>
+            <span className="dash-action-icon"><Boxes size={20} /></span>
             <div className="dash-action-texts">
               <span className="dash-action-title">Record Stock</span>
               <span className="dash-action-hint">Manual physical count</span>
@@ -234,7 +247,7 @@ export default function DashboardPage({ user, addToast }) {
           </a>
 
           <a href="#/daily-prices" className="dash-action-btn">
-            <span className="dash-action-icon">💰</span>
+            <span className="dash-action-icon"><IndianRupee size={20} /></span>
             <div className="dash-action-texts">
               <span className="dash-action-title">Daily Prices</span>
               <span className="dash-action-hint">Update product rates</span>
@@ -242,7 +255,7 @@ export default function DashboardPage({ user, addToast }) {
           </a>
 
           <a href="#/outstanding" className="dash-action-btn">
-            <span className="dash-action-icon">📊</span>
+            <span className="dash-action-icon"><TrendingUp size={20} /></span>
             <div className="dash-action-texts">
               <span className="dash-action-title">Customer Ledger</span>
               <span className="dash-action-hint">View outstanding balances</span>
@@ -255,7 +268,7 @@ export default function DashboardPage({ user, addToast }) {
       <section className="dash-card" aria-labelledby="chicken-loads-heading">
         <div className="dash-card-header">
           <h2 id="chicken-loads-heading" className="dash-card-title">
-            <span>🐔</span>
+            <span><Truck size={18} /></span>
             <span>Today's Chicken Loads &amp; Dressing Wastage</span>
           </h2>
           <a href="#/chicken-loads" className="dash-card-action-link">
@@ -266,7 +279,7 @@ export default function DashboardPage({ user, addToast }) {
 
         {loads.today_loads_count === 0 ? (
           <div className="dash-empty-block">
-            <span className="dash-empty-block-icon">🚚</span>
+            <span className="dash-empty-block-icon"><Truck size={36} /></span>
             <p><strong>No chicken loads recorded yet for today.</strong></p>
             <p style={{ fontSize: 'var(--text-xs)' }}>
               Loads recorded for today ({data?.date}) will calculate live weight, dressed weight, and aggregate dressing wastage.
@@ -304,13 +317,13 @@ export default function DashboardPage({ user, addToast }) {
                   </span>
                 </div>
                 <span className="dash-load-stat-sub">
-                  {wastageClass === 'good' ? '✅ Optimal processing' : wastageClass === 'warning' ? '⚠️ Moderate loss' : '🚨 High processing loss'}
+                  {wastageClass === 'good' ? 'Optimal processing' : wastageClass === 'warning' ? 'Moderate loss' : 'High processing loss'}
                 </span>
               </div>
             </div>
 
             <p className="dash-formula-note">
-              <span>ℹ️</span>
+              <span><Info size={14} /></span>
               <span>
                 Calculated strictly via weighted formula: <code>((Sum Live - Sum Dressed) / Sum Live) * 100</code>. Never averaged.
               </span>
@@ -324,7 +337,7 @@ export default function DashboardPage({ user, addToast }) {
         <div className="dash-card-header">
           <div>
             <h2 id="stock-heading" className="dash-card-title">
-              <span>📦</span>
+              <span><Boxes size={18} /></span>
               <span>Latest Manual Stock Observations</span>
             </h2>
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', marginTop: '0.2rem' }}>
@@ -339,7 +352,7 @@ export default function DashboardPage({ user, addToast }) {
 
         {(!stock.latest_observations || stock.latest_observations.length === 0) ? (
           <div className="dash-empty-block">
-            <span className="dash-empty-block-icon">📦</span>
+            <span className="dash-empty-block-icon"><Boxes size={36} /></span>
             <p><strong>No active products configured.</strong></p>
             <a href="#/products" className="dash-empty-block-btn">Go to Products</a>
           </div>
@@ -385,7 +398,7 @@ export default function DashboardPage({ user, addToast }) {
         )}
 
         <p className="dash-formula-note" style={{ marginTop: '0.9rem' }}>
-          <span>📌</span>
+          <span><Info size={14} /></span>
           <span>
             Physical observations represent actual in-shop counts. Physical stock is never deducted or auto-calculated from sales.
           </span>
@@ -400,7 +413,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-card" style={{ padding: '1.25rem' }}>
             <div className="dash-card-header" style={{ marginBottom: '0.85rem' }}>
               <h3 className="dash-card-title" style={{ fontSize: '0.92rem' }}>
-                <span>🐔</span>
+                <span><Truck size={16} /></span>
                 <span>Recent Loads</span>
               </h3>
               <a href="#/chicken-loads" className="dash-card-action-link">View all</a>
@@ -436,7 +449,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-card" style={{ padding: '1.25rem' }}>
             <div className="dash-card-header" style={{ marginBottom: '0.85rem' }}>
               <h3 className="dash-card-title" style={{ fontSize: '0.92rem' }}>
-                <span>🧾</span>
+                <span><ReceiptText size={16} /></span>
                 <span>Recent Sales</span>
               </h3>
               <a href="#/sales" className="dash-card-action-link">View all</a>
@@ -472,7 +485,7 @@ export default function DashboardPage({ user, addToast }) {
           <div className="dash-card" style={{ padding: '1.25rem' }}>
             <div className="dash-card-header" style={{ marginBottom: '0.85rem' }}>
               <h3 className="dash-card-title" style={{ fontSize: '0.92rem' }}>
-                <span>💳</span>
+                <span><Wallet size={16} /></span>
                 <span>Recent Payments</span>
               </h3>
               <a href="#/payments" className="dash-card-action-link">View all</a>

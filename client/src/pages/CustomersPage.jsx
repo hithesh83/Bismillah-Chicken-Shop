@@ -22,6 +22,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState, StatusBadge } from '../components/ui/UIStates.jsx'
+import { UsersRound, MapPin } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Currency and Format Helpers ─────────────────────────────
@@ -318,7 +319,7 @@ export default function CustomersPage({ user, addToast }) {
           gap: '0.85rem',
         }}
       >
-        <span style={{ fontSize: '1.4rem' }}>🤝</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center' }}><UsersRound size={22} /></span>
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', lineHeight: 1.5 }}>
           <strong style={{ color: 'var(--color-text)' }}>Disambiguation & Cash Customer Rules:</strong> Multiple customers may share identical business names (e.g. multiple <em>Taj Hotel</em>s). The <strong>Party ID</strong> and <strong>Address/Location</strong> are displayed together to eliminate confusion. Walk-in cash customers do not require a profile.
         </div>
@@ -435,7 +436,7 @@ export default function CustomersPage({ user, addToast }) {
         ) : customers.length === 0 ? (
           <div style={{ padding: '3rem' }}>
             <EmptyState
-              icon="🤝"
+              icon={UsersRound}
               title="No customer accounts found"
               message="No profiles match your search criteria. Create a customer to start tracking ledger accounts."
               action={openCreateModal}
@@ -489,7 +490,8 @@ export default function CustomersPage({ user, addToast }) {
                             {party.name}
                           </span>
                           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', marginTop: 2 }}>
-                            📍 {party.address || 'Location not specified'}
+                            <MapPin size={13} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                            {party.address || 'Location not specified'}
                           </div>
                         </div>
                       </td>

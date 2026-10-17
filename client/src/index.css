@@ -1,50 +1,71 @@
 /* ── Google Font ─────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ── Design Tokens ───────────────────────────────────────── */
+/* ── Centralized Design Tokens (Exact 5-Color System) ────── */
 :root {
-  /* Colours */
-  --color-bg:         #0f1117;
-  --color-surface:    #1a1d27;
-  --color-surface-2:  #20243a;   /* slightly lighter, for nested surfaces */
-  --color-border:     #2a2d3e;
-  --color-accent:     #f5a623;   /* warm amber — brand colour */
-  --color-accent-dim: rgba(245, 166, 35, 0.12);
-  --color-text:       #e8eaf0;
-  --color-muted:      #8b8fa8;
-  --color-ok:         #22c55e;
-  --color-ok-dim:     rgba(34, 197, 94, 0.12);
-  --color-error:      #ef4444;
-  --color-error-dim:  rgba(239, 68, 68, 0.12);
-  --color-warning:    #f59e0b;
-  --color-warning-dim:rgba(245, 158, 11, 0.12);
-  --color-info:       #60a5fa;
-  --color-info-dim:   rgba(96, 165, 250, 0.12);
+  /* ── Core Brand Palette (Exact Hex) ── */
+  --color-text:            #030916;  /* Text / Dark */
+  --color-bg:              #EEF2F7;  /* Canvas Background */
+  --color-primary:         #152E4B;  /* Primary Brand Navy */
+  --color-primary-hover:   #0E2034;
+  --color-primary-dim:     rgba(21, 46, 75, 0.08);
+  --color-secondary:       #A95D06;  /* Secondary Brand Bronze */
+  --color-secondary-hover: #8D4C03;
+  --color-secondary-dim:   rgba(169, 93, 6, 0.09);
+  --color-accent:          #F59E0B;  /* Accent Amber / Gold */
+  --color-accent-hover:    #D97706;
+  --color-accent-dim:      rgba(245, 158, 11, 0.12);
 
-  /* Layout */
-  --sidebar-width:       240px;
-  --sidebar-collapsed:   0px;
-  --header-height:       56px;
+  /* ── Supporting Surfaces & Neutrals ── */
+  --color-surface:         #FFFFFF;  /* Cards, modals, form panels */
+  --color-surface-2:       #F8FAFC;  /* Headers, secondary rows, tags */
+  --color-surface-hover:   #F1F5F9;  /* Table row hover, list hover */
+  --color-border:          #D1D9E4;  /* Standard crisp container borders */
+  --color-border-subtle:   #E2E8F0;  /* Internal row dividers */
+  --color-border-strong:   #94A3B8;  /* Prominent borders / input states */
+  --color-muted:           #526075;  /* Accessible secondary body text */
+  --color-muted-light:     #7E8B9F;  /* Subtle captions, timestamps */
 
-  /* Shape */
-  --radius:    10px;
-  --radius-sm: 6px;
-  --radius-lg: 16px;
+  /* ── Semantic States (Accessible Light Canvas Ratios) ── */
+  --color-ok:              #15803D;  /* Forest green (pass/paid) */
+  --color-ok-dim:          rgba(21, 128, 61, 0.10);
+  --color-error:           #B91C1C;  /* Crimson (fail/due/void) */
+  --color-error-dim:       rgba(185, 28, 28, 0.10);
+  --color-warning:         #B45309;  /* Deep amber (pending/alert) */
+  --color-warning-dim:     rgba(180, 83, 9, 0.12);
+  --color-info:            #1D4ED8;  /* Rich blue (manager/details) */
+  --color-info-dim:        rgba(29, 78, 216, 0.10);
 
-  /* Elevation */
-  --shadow:    0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  /* ── Layout Dimensions ── */
+  --sidebar-width:         250px;
+  --sidebar-collapsed:     0px;
+  --header-height:         60px;
 
-  /* Typography scale */
-  --text-xs:   0.72rem;
-  --text-sm:   0.85rem;
-  --text-base: 0.95rem;
-  --text-lg:   1.1rem;
-  --text-xl:   1.35rem;
-  --text-2xl:  1.65rem;
+  /* ── Shapes & Elevation ── */
+  --radius:                10px;
+  --radius-sm:             6px;
+  --radius-lg:             14px;
+  --radius-full:           9999px;
 
-  /* Transitions */
-  --transition: 0.18s ease;
+  --shadow-xs:             0 1px 2px rgba(3, 9, 22, 0.04);
+  --shadow-sm:             0 1px 3px rgba(3, 9, 22, 0.06), 0 1px 2px rgba(3, 9, 22, 0.03);
+  --shadow:                0 4px 6px -1px rgba(3, 9, 22, 0.07), 0 2px 4px -1px rgba(3, 9, 22, 0.04);
+  --shadow-lg:             0 10px 25px -3px rgba(3, 9, 22, 0.09), 0 4px 6px -2px rgba(3, 9, 22, 0.04);
+  --shadow-modal:          0 20px 40px -4px rgba(3, 9, 22, 0.18), 0 8px 16px -4px rgba(3, 9, 22, 0.08);
+
+  /* ── Typography Scale ── */
+  --text-xs:               0.75rem;   /* 12px */
+  --text-sm:               0.875rem;  /* 14px */
+  --text-base:             0.95rem;   /* ~15px */
+  --text-lg:               1.125rem;  /* 18px */
+  --text-xl:               1.35rem;   /* ~22px */
+  --text-2xl:              1.65rem;   /* ~26px */
+  --text-3xl:              2rem;      /* 32px */
+
+  /* ── Interactions & Focus ── */
+  --transition:            0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --focus-ring:            0 0 0 3px rgba(21, 46, 75, 0.18);
+  --focus-ring-accent:     0 0 0 3px rgba(245, 158, 11, 0.28);
 }
 
 /* ── Reset ───────────────────────────────────────────────── */
@@ -54,16 +75,20 @@
   padding: 0;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--color-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-bg);
   color: var(--color-text);
   min-height: 100vh;
   line-height: 1.6;
   font-size: var(--text-base);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -76,6 +101,10 @@ button {
   cursor: pointer;
 }
 
+input, select, textarea {
+  font-family: inherit;
+}
+
 ul, ol {
   list-style: none;
 }
@@ -86,16 +115,19 @@ ul, ol {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--color-bg);
 }
 
 .auth-spinner {
   display: block;
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--color-accent-dim);
-  border-top-color: var(--color-accent);
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(21, 46, 75, 0.15);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -21,12 +21,27 @@
  *   section  — optional section heading above this item
  */
 
+import {
+  LayoutDashboard,
+  Package,
+  Truck,
+  IndianRupee,
+  Boxes,
+  UsersRound,
+  ReceiptText,
+  Wallet,
+  CircleAlert,
+  ChartNoAxesCombined,
+  Users,
+  Settings,
+} from './components/ui/Icons.jsx'
+
 export const NAV_ITEMS = [
   // ── Main ──────────────────────────────────────────────────
   {
     id:      'dashboard',
     label:   'Dashboard',
-    icon:    '📊',
+    icon:    LayoutDashboard,
     hash:    '#/dashboard',
     roles:   [],           // all roles
   },
@@ -35,7 +50,7 @@ export const NAV_ITEMS = [
   {
     id:      'products',
     label:   'Products',
-    icon:    '🗂️',
+    icon:    Package,
     hash:    '#/products',
     roles:   [],
     section: 'Stock',
@@ -43,21 +58,21 @@ export const NAV_ITEMS = [
   {
     id:      'chicken-loads',
     label:   'Chicken Loads',
-    icon:    '🐔',
+    icon:    Truck,
     hash:    '#/chicken-loads',
     roles:   [],
   },
   {
     id:      'daily-prices',
     label:   'Daily Prices',
-    icon:    '💰',
+    icon:    IndianRupee,
     hash:    '#/daily-prices',
     roles:   [],
   },
   {
     id:      'remaining-stock',
     label:   'Remaining Stock',
-    icon:    '📦',
+    icon:    Boxes,
     hash:    '#/remaining-stock',
     roles:   [],
   },
@@ -66,7 +81,7 @@ export const NAV_ITEMS = [
   {
     id:      'customers',
     label:   'Customers',
-    icon:    '🤝',
+    icon:    UsersRound,
     hash:    '#/customers',
     roles:   [],
     section: 'Sales',
@@ -74,21 +89,21 @@ export const NAV_ITEMS = [
   {
     id:      'sales',
     label:   'Sales',
-    icon:    '🧾',
+    icon:    ReceiptText,
     hash:    '#/sales',
     roles:   [],
   },
   {
     id:      'payments',
     label:   'Payments',
-    icon:    '💳',
+    icon:    Wallet,
     hash:    '#/payments',
     roles:   [],
   },
   {
     id:      'outstanding',
     label:   'Outstanding',
-    icon:    '⚠️',
+    icon:    CircleAlert,
     hash:    '#/outstanding',
     roles:   [],
   },
@@ -97,7 +112,7 @@ export const NAV_ITEMS = [
   {
     id:      'reports',
     label:   'Reports',
-    icon:    '📈',
+    icon:    ChartNoAxesCombined,
     hash:    '#/reports',
     roles:   ['admin', 'manager'],
     section: 'Reports',
@@ -107,7 +122,7 @@ export const NAV_ITEMS = [
   {
     id:      'user-management',
     label:   'User Management',
-    icon:    '👥',
+    icon:    Users,
     hash:    '#/user-management',
     roles:   ['admin'],          // admin only
     section: 'Admin',
@@ -115,7 +130,7 @@ export const NAV_ITEMS = [
   {
     id:      'settings',
     label:   'Settings',
-    icon:    '⚙️',
+    icon:    Settings,
     hash:    '#/settings',
     roles:   ['admin'],          // admin only
   },

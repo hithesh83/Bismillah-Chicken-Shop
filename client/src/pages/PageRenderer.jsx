@@ -9,6 +9,7 @@
  * Server-side enforcement remains the authoritative check.
  */
 import { canAccess, NAV_ITEMS } from '../router.js'
+import { Shield } from '../components/ui/Icons.jsx'
 
 import DashboardPage      from './DashboardPage.jsx'
 import ProductsPage       from './ProductsPage.jsx'
@@ -47,7 +48,7 @@ export default function PageRenderer({ routeId, user, addToast }) {
     return (
       <div className="page">
         <div className="placeholder-card">
-          <span className="placeholder-icon">🚫</span>
+          <span className="placeholder-icon"><Shield size={40} /></span>
           <span className="placeholder-label">Access Denied</span>
           <p className="placeholder-desc">
             You do not have permission to view this page.

@@ -28,6 +28,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { LoadingState, ErrorState, EmptyState, StatusBadge } from '../components/ui/UIStates.jsx'
+import { ReceiptText, MapPin } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Helpers ────────────────────────────────────────────────
@@ -497,7 +498,7 @@ export default function SalesPage({ user, addToast }) {
             onClick={openWalkInModal}
             style={{ background: '#059669', borderColor: '#059669' }}
           >
-            ⚡ Fast Walk-In Sale
+            Fast Walk-In Sale
           </button>
           <button
             className="btn btn-primary"
@@ -521,7 +522,7 @@ export default function SalesPage({ user, addToast }) {
           gap: '0.85rem',
         }}
       >
-        <span style={{ fontSize: '1.4rem' }}>🧾</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center' }}><ReceiptText size={22} /></span>
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', lineHeight: 1.5 }}>
           <strong style={{ color: 'var(--color-text)' }}>Price Immutability & Financial Math:</strong> Each line item captures the exact rate per kg charged at sale time. Updating daily prices later will <em>never</em> alter historical bills. Immediate payments are atomically recorded in the payment ledger without double-counting.
         </div>
@@ -644,11 +645,11 @@ export default function SalesPage({ user, addToast }) {
         ) : sales.length === 0 ? (
           <div style={{ padding: '3rem' }}>
             <EmptyState
-              icon="🧾"
+              icon={ReceiptText}
               title="No sales recorded yet"
               message="Record your first counter cash sale or hotel credit bill."
               action={openWalkInModal}
-              actionLabel="⚡ Fast Walk-In Sale"
+              actionLabel="Fast Walk-In Sale"
             />
           </div>
         ) : (
@@ -696,7 +697,7 @@ export default function SalesPage({ user, addToast }) {
                       <td style={{ whiteSpace: 'nowrap' }}>
                         <div>{fmtDateTime(s.sale_timestamp)}</div>
                         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)' }}>
-                          By: {s.created_by_name || 'Staff'}
+                           By: {s.created_by_name || 'Staff'}
                         </div>
                       </td>
 
@@ -721,7 +722,8 @@ export default function SalesPage({ user, addToast }) {
                               {s.party_code}
                             </span>
                             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', marginTop: 2 }}>
-                              📍 {s.party_address || 'No location specified'}
+                              <MapPin size={12} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                              {s.party_address || 'No location specified'}
                             </div>
                           </div>
                         ) : (
@@ -860,7 +862,7 @@ export default function SalesPage({ user, addToast }) {
           <div className="modal" style={{ maxWidth: 680 }} role="dialog" aria-modal="true">
             <div className="modal-header">
               <h3 className="modal-title">
-                {saleMode === 'walkin' ? '⚡ Fast Walk-In Counter Sale' : '🤝 Credit / Party Customer Billing'}
+                {saleMode === 'walkin' ? 'Fast Walk-In Counter Sale' : 'Credit / Party Customer Billing'}
               </h3>
               <button className="modal-close" onClick={() => setShowModal(false)}>x</button>
             </div>
@@ -917,7 +919,7 @@ export default function SalesPage({ user, addToast }) {
                     <option value="">Select a customer…</option>
                     {parties.map((p) => (
                       <option key={p.id} value={p.id}>
-                        [{p.party_code}] {p.name} — 📍 {p.address || 'Location not specified'} {p.credit_enabled ? '(Credit OK)' : '(Cash Only)'}
+                        [{p.party_code}] {p.name} — {p.address || 'Location not specified'} {p.credit_enabled ? '(Credit OK)' : '(Cash Only)'}
                       </option>
                     ))}
                   </select>
@@ -1218,7 +1220,10 @@ export default function SalesPage({ user, addToast }) {
                       <span style={{ marginLeft: 4, fontFamily: 'monospace' }}>({detailData.sale.party_code})</span>
                     )}
                     {detailData.sale.party_address && (
-                      <div style={{ color: 'var(--color-muted)', marginTop: 2 }}>📍 {detailData.sale.party_address}</div>
+                      <div style={{ color: 'var(--color-muted)', marginTop: 2 }}>
+                        <MapPin size={12} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                        {detailData.sale.party_address}
+                      </div>
                     )}
                   </div>
                   <div style={{ textAlign: 'right' }}>

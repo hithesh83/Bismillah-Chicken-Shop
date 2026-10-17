@@ -18,6 +18,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import { CircleCheck, MapPin } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -323,7 +324,7 @@ export default function OutstandingPage({ user, addToast }) {
         <ErrorState message={error} onRetry={fetchOutstanding} />
       ) : customers.length === 0 ? (
         <EmptyState
-          icon="✅"
+          icon={CircleCheck}
           title="No outstanding balances"
           message={hasBalance === 'true' ? 'No customers currently have unpaid credit balances.' : 'No customer records match.'}
         />
@@ -357,7 +358,7 @@ export default function OutstandingPage({ user, addToast }) {
                       <td>
                         <div style={{ fontWeight: 700, color: 'var(--color-text)' }}>{c.name}</div>
                         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', fontFamily: 'monospace' }}>
-                          {c.party_code} {c.address ? `· 📍 ${c.address}` : ''}
+                          {c.party_code} {c.address ? <>· <MapPin size={11} style={{ verticalAlign: 'middle', marginRight: 2 }} />{c.address}</> : ''}
                         </div>
                       </td>
                       <td>

@@ -12,6 +12,7 @@
  */
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import { IndianRupee } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 function todayIST() {
@@ -230,7 +231,7 @@ export default function DailyPricesPage({ user, addToast }) {
       ) : error ? (
         <ErrorState message={error} onRetry={fetchList} />
       ) : priceList.length === 0 ? (
-        <EmptyState icon="💰" title="No price records" message="No prices match the current filters." />
+        <EmptyState icon={IndianRupee} title="No price records" message="No prices match the current filters." />
       ) : (
         <div className="card" style={{ padding: 0 }}>
           <div className="table-wrapper">

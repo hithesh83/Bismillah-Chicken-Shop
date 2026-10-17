@@ -4,14 +4,24 @@
  * Full Application Settings Interface — Admin Only.
  *
  * Settings Categories:
- *   1. 🏪 Shop Profile: Name, Tagline, Phone, Email, Physical Address, Tax ID / GSTIN
- *   2. 🌐 Business Preferences: Timezone (Asia/Kolkata), Currency (INR ₹), Date Format, Weight Unit
- *   3. ⚙️ Operational Defaults: Low stock threshold kg, Default credit limit, Payment mode, Receipt printing
- *   4. 🔒 Security & Audit: Session timeout, Brute-force lockout policy, Password policy, Settings Audit Trail, and Change Own Password.
+ *   1. Shop Profile: Name, Tagline, Phone, Email, Physical Address, Tax ID / GSTIN
+ *   2. Business Preferences: Timezone (Asia/Kolkata), Currency (INR ₹), Date Format, Weight Unit
+ *   3. Operational Defaults: Low stock threshold kg, Default credit limit, Payment mode, Receipt printing
+ *   4. Security & Audit: Session timeout, Brute-force lockout policy, Password policy, Settings Audit Trail, and Change Own Password.
  */
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import {
+  Shield,
+  Store,
+  Globe,
+  Settings,
+  Lock,
+  Key,
+  ScrollText,
+  RefreshCw,
+} from '../components/ui/Icons.jsx'
 import './pages.css'
 import './SettingsPage.css'
 
@@ -150,7 +160,7 @@ export default function SettingsPage({ user, addToast }) {
     return (
       <div className="page settings-page">
         <div className="placeholder-card">
-          <span className="placeholder-icon">🚫</span>
+          <span className="placeholder-icon"><Shield size={40} /></span>
           <span className="placeholder-label">Access Restricted</span>
           <p className="placeholder-desc">
             Application settings require <strong>Administrator</strong> credentials.
@@ -182,7 +192,7 @@ export default function SettingsPage({ user, addToast }) {
       {/* ── Page Header ─────────────────────────────────────────── */}
       <div className="page-header">
         <div>
-          <h1 className="page-title">Application Settings ⚙️</h1>
+          <h1 className="page-title">Application Settings</h1>
           <p className="page-subtitle">
             Configure shop identity, regional standards, operational defaults, and security policies.
           </p>
@@ -196,28 +206,28 @@ export default function SettingsPage({ user, addToast }) {
           className={`settings-tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
           onClick={() => setActiveTab('profile')}
         >
-          <span>🏪</span> Shop Profile
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Store size={16} /></span> Shop Profile
         </button>
         <button
           type="button"
           className={`settings-tab-btn ${activeTab === 'business' ? 'active' : ''}`}
           onClick={() => setActiveTab('business')}
         >
-          <span>🌐</span> Business Preferences
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Globe size={16} /></span> Business Preferences
         </button>
         <button
           type="button"
           className={`settings-tab-btn ${activeTab === 'operational' ? 'active' : ''}`}
           onClick={() => setActiveTab('operational')}
         >
-          <span>⚙️</span> Operational Defaults
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Settings size={16} /></span> Operational Defaults
         </button>
         <button
           type="button"
           className={`settings-tab-btn ${activeTab === 'security' ? 'active' : ''}`}
           onClick={() => setActiveTab('security')}
         >
-          <span>🔒</span> Security & Policy
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Lock size={16} /></span> Security & Policy
         </button>
       </nav>
 
@@ -226,7 +236,7 @@ export default function SettingsPage({ user, addToast }) {
         <div className="settings-card">
           <div className="settings-card-header">
             <div>
-              <h2 className="settings-section-title"><span>🏪</span> Shop Identity & Contact</h2>
+              <h2 className="settings-section-title"><span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Store size={20} /></span> Shop Identity & Contact</h2>
               <p className="page-subtitle">
                 Information displayed on invoices, customer receipts, and report exports.
               </p>
@@ -337,7 +347,7 @@ export default function SettingsPage({ user, addToast }) {
         <div className="settings-card">
           <div className="settings-card-header">
             <div>
-              <h2 className="settings-section-title"><span>🌐</span> Regional & Display Standards</h2>
+              <h2 className="settings-section-title"><span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Globe size={20} /></span> Regional & Display Standards</h2>
               <p className="page-subtitle">
                 Timezone, currency symbols, and display units. Historical stored accounting values are preserved.
               </p>
@@ -439,7 +449,7 @@ export default function SettingsPage({ user, addToast }) {
         <div className="settings-card">
           <div className="settings-card-header">
             <div>
-              <h2 className="settings-section-title"><span>⚙️</span> Shop-Floor Operational Defaults</h2>
+              <h2 className="settings-section-title"><span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Settings size={20} /></span> Shop-Floor Operational Defaults</h2>
               <p className="page-subtitle">
                 Inventory alert thresholds, customer credit policies, and point-of-sale defaults.
               </p>
@@ -499,10 +509,10 @@ export default function SettingsPage({ user, addToast }) {
                   defaultValue={operationalPrefs.default_payment_mode || 'cash'}
                   disabled={saving}
                 >
-                  <option value="cash">Cash 💵</option>
-                  <option value="upi">UPI / QR Code 📱</option>
-                  <option value="bank">Bank Transfer 🏦</option>
-                  <option value="other">Other 📄</option>
+                  <option value="cash">Cash</option>
+                  <option value="upi">UPI / QR Code</option>
+                  <option value="bank">Bank Transfer</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
 
@@ -549,7 +559,7 @@ export default function SettingsPage({ user, addToast }) {
           <div className="settings-card">
             <div className="settings-card-header">
               <div>
-                <h2 className="settings-section-title"><span>🔒</span> Authentication & Brute-Force Policy</h2>
+                <h2 className="settings-section-title"><span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Lock size={20} /></span> Authentication & Brute-Force Policy</h2>
                 <p className="page-subtitle">
                   Configure session lifecycle and login lockout thresholds. Secrets are never stored or displayed.
                 </p>
@@ -631,7 +641,7 @@ export default function SettingsPage({ user, addToast }) {
                 </div>
 
                 <div className="settings-info-box settings-full-width">
-                  <strong>🛡️ System Security Guarantee:</strong>
+                  <strong><Shield size={16} style={{ verticalAlign: 'middle', marginRight: 6 }} /> System Security Guarantee:</strong>
                   <span>• Passwords are consistently hashed using bcrypt with salt cost factor 12.</span>
                   <span>• Authentication uses HTTP-Only, SameSite Same-Origin JWT cookies.</span>
                   <span>• All sensitive financial, customer, and administrative modifications write immutable records to the audit log.</span>
@@ -650,7 +660,7 @@ export default function SettingsPage({ user, addToast }) {
           <div className="settings-card">
             <div className="settings-card-header">
               <div>
-                <h2 className="settings-section-title"><span>🔑</span> Change Your Password</h2>
+                <h2 className="settings-section-title"><span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Key size={20} /></span> Change Your Password</h2>
                 <p className="page-subtitle">
                   Update your administrator login credentials. Requires your current password.
                 </p>
@@ -710,7 +720,7 @@ export default function SettingsPage({ user, addToast }) {
           <div className="settings-card">
             <div className="settings-card-header">
               <div>
-                <h2 className="settings-section-title"><span>📜</span> Settings Audit Trail</h2>
+                <h2 className="settings-section-title"><span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><ScrollText size={20} /></span> Settings Audit Trail</h2>
                 <p className="page-subtitle">
                   Chronological history of configuration and policy changes made by administrators.
                 </p>
@@ -721,7 +731,7 @@ export default function SettingsPage({ user, addToast }) {
                 onClick={fetchAudit}
                 disabled={loadingAudit}
               >
-                <span>🔄 Refresh Trail</span>
+                <span><RefreshCw size={14} style={{ verticalAlign: 'middle', marginRight: 6 }} /> Refresh Trail</span>
               </button>
             </div>
 

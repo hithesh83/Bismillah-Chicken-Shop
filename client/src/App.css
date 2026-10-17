@@ -1,6 +1,6 @@
-/* ── Page layout ─────────────────────────────────────────── */
+/* ── Page Layout ─────────────────────────────────────────── */
 .container {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
   display: flex;
@@ -12,17 +12,16 @@
 .header {
   text-align: center;
   padding: 2.5rem 1.5rem;
-  background: linear-gradient(135deg, #1a1d27 0%, #242736 100%);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 .logo {
   font-size: 3.5rem;
   line-height: 1;
   margin-bottom: 0.75rem;
-  /* subtle float animation */
   animation: float 3s ease-in-out infinite;
 }
 
@@ -33,16 +32,16 @@
 
 .header h1 {
   font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: 700;
-  color: var(--color-accent);
+  font-weight: 800;
+  color: var(--color-primary); /* #152E4B */
   letter-spacing: -0.02em;
 }
 
 .subtitle {
-  margin-top: 0.25rem;
-  color: var(--color-muted);
-  font-size: 1rem;
-  font-weight: 500;
+  margin-top: 0.35rem;
+  color: var(--color-secondary); /* #A95D06 */
+  font-size: 0.95rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -53,17 +52,17 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: 1.75rem;
-  box-shadow: var(--shadow);
-  transition: border-color 0.2s;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition);
 }
 
 .card:hover {
-  border-color: var(--color-accent);
+  border-color: #BAC7D5;
 }
 
 .card h2 {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -76,27 +75,27 @@
   flex-direction: column;
   gap: 0.25rem;
   padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
   font-size: 0.95rem;
 }
 
 .status-badge small {
   font-weight: 400;
   font-size: 0.8rem;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .status-badge.ok {
-  background: rgba(34, 197, 94, 0.12);
+  background: var(--color-ok-dim);
   color: var(--color-ok);
-  border: 1px solid rgba(34, 197, 94, 0.25);
+  border: 1px solid rgba(21, 128, 61, 0.25);
 }
 
 .status-badge.error {
-  background: rgba(239, 68, 68, 0.12);
+  background: var(--color-error-dim);
   color: var(--color-error);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(185, 28, 28, 0.25);
 }
 
 /* ── Roadmap list ────────────────────────────────────────── */
@@ -108,17 +107,20 @@
 }
 
 .roadmap li {
-  padding: 0.6rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
   color: var(--color-muted);
-  background: rgba(255, 255, 255, 0.03);
-  transition: background 0.15s;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-subtle);
+  transition: background var(--transition);
 }
 
 .roadmap li.done {
   color: var(--color-ok);
-  background: rgba(34, 197, 94, 0.07);
+  background: var(--color-ok-dim);
+  border-color: rgba(21, 128, 61, 0.2);
+  font-weight: 600;
 }
 
 /* ── Footer ──────────────────────────────────────────────── */
@@ -135,14 +137,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--color-bg);
 }
 
 .auth-spinner {
   display: block;
-  width: 32px;
-  height: 32px;
-  border: 3px solid rgba(245, 166, 35, 0.2);
-  border-top-color: var(--color-accent);
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(21, 46, 75, 0.15);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }

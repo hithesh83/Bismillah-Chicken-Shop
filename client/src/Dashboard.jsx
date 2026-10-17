@@ -1,3 +1,4 @@
+import { Drumstick, CircleCheck, Clock } from './components/ui/Icons.jsx'
 import './Dashboard.css'
 
 /**
@@ -9,9 +10,9 @@ import './Dashboard.css'
  */
 export default function Dashboard({ user, onLogout }) {
   const roleLabel = {
-    admin:   '👑 Admin',
-    manager: '🔑 Manager',
-    staff:   '🧑‍💼 Staff',
+    admin:   'Admin',
+    manager: 'Manager',
+    staff:   'Staff',
   }[user.role] ?? user.role
 
   return (
@@ -19,7 +20,7 @@ export default function Dashboard({ user, onLogout }) {
       {/* ── Top nav ── */}
       <header className="dash-header">
         <div className="dash-brand">
-          <span>🍗</span>
+          <Drumstick size={20} />
           <span className="dash-brand-name">Bismillah Chicken Shop</span>
         </div>
 
@@ -43,7 +44,7 @@ export default function Dashboard({ user, onLogout }) {
         {/* Welcome card */}
         <section className="dash-card dash-welcome">
           <h1 className="dash-welcome-title">
-            Welcome back, {user.name?.split(' ')[0] ?? 'User'}! 👋
+            Welcome back, {user.name?.split(' ')[0] ?? 'User'}!
           </h1>
           <p className="dash-welcome-sub">
             You are signed in as <strong>{user.email}</strong> with
@@ -55,10 +56,10 @@ export default function Dashboard({ user, onLogout }) {
         <section className="dash-card">
           <h2 className="dash-section-title">Development Roadmap</h2>
           <ul className="dash-roadmap">
-            <li className="done">✅ Phase 1 — Project scaffold</li>
-            <li className="done">✅ Phase 2 — Database foundation (Supabase)</li>
-            <li className="done">✅ Phase 3 — Authentication &amp; RBAC</li>
-            <li>⏳ Phase 4 — Business features (loads, sales, reports)</li>
+            <li className="done"><CircleCheck size={14} style={{ verticalAlign: 'middle', marginRight: 6 }} />Phase 1 — Project scaffold</li>
+            <li className="done"><CircleCheck size={14} style={{ verticalAlign: 'middle', marginRight: 6 }} />Phase 2 — Database foundation (Supabase)</li>
+            <li className="done"><CircleCheck size={14} style={{ verticalAlign: 'middle', marginRight: 6 }} />Phase 3 — Authentication &amp; RBAC</li>
+            <li><Clock size={14} style={{ verticalAlign: 'middle', marginRight: 6 }} />Phase 4 — Business features (loads, sales, reports)</li>
           </ul>
         </section>
 

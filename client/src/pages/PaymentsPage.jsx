@@ -19,6 +19,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState, StatusBadge } from '../components/ui/UIStates.jsx'
+import { Wallet, MapPin } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -490,7 +491,7 @@ export default function PaymentsPage({ user, addToast }) {
         <ErrorState message={error} onRetry={fetchPayments} />
       ) : payments.length === 0 ? (
         <EmptyState
-          icon="💳"
+          icon={Wallet}
           title="No payment receipts found"
           message="No payments match your current filter criteria."
           action={() => openRecordModal()}
@@ -763,7 +764,8 @@ export default function PaymentsPage({ user, addToast }) {
                                 alignItems: 'center',
                                 fontSize: 'var(--text-xs)',
                                 padding: '4px 6px',
-                                background: 'rgba(255, 255, 255, 0.05)',
+                                background: 'var(--color-surface-2)',
+                                border: '1px solid var(--color-border-subtle)',
                                 borderRadius: 4,
                               }}
                             >
@@ -892,7 +894,10 @@ export default function PaymentsPage({ user, addToast }) {
                       <span style={{ marginLeft: 4, fontFamily: 'monospace' }}>({detailData.payment.party_code})</span>
                     )}
                     {detailData.payment.party_address && (
-                      <div style={{ color: 'var(--color-muted)', marginTop: 2 }}>📍 {detailData.payment.party_address}</div>
+                      <div style={{ color: 'var(--color-muted)', marginTop: 2 }}>
+                        <MapPin size={13} style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                        {detailData.payment.party_address}
+                      </div>
                     )}
                   </div>
                   <div style={{ textAlign: 'right' }}>

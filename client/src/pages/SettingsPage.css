@@ -4,7 +4,12 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  animation: fadeIn 0.25s ease-out;
+  animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Tabs Navigation ───────────────────────────────────────── */
@@ -36,13 +41,14 @@
 
 .settings-tab-btn:hover {
   color: var(--color-text);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--color-surface-hover);
 }
 
 .settings-tab-btn.active {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
-  background: var(--color-surface-2);
+  color: var(--color-primary); /* #152E4B */
+  border-bottom-color: var(--color-primary);
+  background: var(--color-surface);
+  font-weight: 700;
 }
 
 /* ── Settings Card & Form ──────────────────────────────────── */
@@ -50,7 +56,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: 1.75rem 1.5rem;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
@@ -62,14 +68,14 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border-subtle);
   padding-bottom: 1rem;
 }
 
 .settings-section-title {
   font-size: var(--text-base);
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-primary); /* #152E4B */
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -90,14 +96,15 @@
   justify-content: flex-end;
   gap: 0.75rem;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .settings-checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   font-size: var(--text-sm);
+  font-weight: 500;
   color: var(--color-text);
   cursor: pointer;
   margin-top: 0.4rem;
@@ -106,7 +113,7 @@
 .settings-checkbox-input {
   width: 18px;
   height: 18px;
-  accent-color: var(--color-accent);
+  accent-color: var(--color-primary); /* #152E4B */
   cursor: pointer;
 }
 
@@ -114,7 +121,7 @@
   background: var(--color-surface-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 0.9rem 1.1rem;
+  padding: 1rem 1.25rem;
   font-size: var(--text-xs);
   color: var(--color-muted);
   line-height: 1.55;
@@ -125,4 +132,5 @@
 
 .settings-info-box strong {
   color: var(--color-text);
+  font-weight: 700;
 }

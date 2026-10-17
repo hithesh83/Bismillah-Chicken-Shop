@@ -18,15 +18,16 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: var(--shadow-xs);
 }
 
 .dash-brand {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-accent);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-primary); /* #152E4B */
 }
 
 .dash-brand-name {
@@ -34,7 +35,9 @@
 }
 
 @media (min-width: 480px) {
-  .dash-brand-name { display: block; }
+  .dash-brand-name {
+    display: block;
+  }
 }
 
 /* ── User bar ────────────────────────────────────────────── */
@@ -63,8 +66,8 @@
 
 .dash-role-badge {
   font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--color-accent);
+  font-weight: 700;
+  color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -72,20 +75,21 @@
 /* ── Logout button ───────────────────────────────────────── */
 .dash-logout-btn {
   padding: 0.45rem 1rem;
-  background: transparent;
+  background: var(--color-surface-2);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   color: var(--color-muted);
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition: all var(--transition);
 }
 
 .dash-logout-btn:hover {
   border-color: var(--color-error);
   color: var(--color-error);
+  background: var(--color-error-dim);
 }
 
 /* ── Main content ────────────────────────────────────────── */
@@ -98,7 +102,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  animation: fadeSlideUp 0.3s ease both;
+  animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes fadeSlideUp {
@@ -112,19 +116,19 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: 1.75rem;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ── Welcome card ────────────────────────────────────────── */
 .dash-welcome {
-  background: linear-gradient(135deg, #1a1d27 0%, #22253a 100%);
-  border-color: rgba(245, 166, 35, 0.2);
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-primary);
 }
 
 .dash-welcome-title {
   font-size: clamp(1.15rem, 3vw, 1.5rem);
-  font-weight: 700;
-  color: var(--color-text);
+  font-weight: 800;
+  color: var(--color-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -135,13 +139,13 @@
 }
 
 .dash-welcome-sub strong {
-  color: var(--color-accent);
+  color: var(--color-text);
 }
 
 /* ── Section titles ──────────────────────────────────────── */
 .dash-section-title {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -158,15 +162,18 @@
 
 .dash-roadmap li {
   padding: 0.55rem 0.75rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   color: var(--color-muted);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .dash-roadmap li.done {
   color: var(--color-ok);
-  background: rgba(34, 197, 94, 0.07);
+  background: var(--color-ok-dim);
+  border-color: rgba(21, 128, 61, 0.2);
+  font-weight: 600;
 }
 
 /* ── Session info ────────────────────────────────────────── */
@@ -178,7 +185,7 @@
 
 .dash-session-info dt {
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -188,5 +195,5 @@
 .dash-session-info dd {
   font-size: 0.9rem;
   color: var(--color-text);
+  font-weight: 600;
 }
-

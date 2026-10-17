@@ -18,6 +18,23 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import {
+  Shield,
+  TrendingUp,
+  Calendar,
+  Download,
+  Printer,
+  RefreshCw,
+  Search,
+  ChartNoAxesCombined,
+  ReceiptText,
+  Wallet,
+  CircleAlert,
+  Truck,
+  Boxes,
+  UsersRound,
+  Drumstick,
+} from '../components/ui/Icons.jsx'
 import './pages.css'
 import './ReportsPage.css'
 
@@ -220,7 +237,7 @@ export default function ReportsPage({ user, addToast }) {
     return (
       <div className="page reports-page">
         <div className="placeholder-card">
-          <span className="placeholder-icon">🚫</span>
+          <span className="placeholder-icon"><Shield size={40} /></span>
           <span className="placeholder-label">Access Restricted</span>
           <p className="placeholder-desc">
             Reports and financial exports require <strong>Admin</strong> or <strong>Manager</strong> credentials.
@@ -304,9 +321,9 @@ export default function ReportsPage({ user, addToast }) {
       <header className="reports-header">
         <div>
           <div className="reports-header-title-row">
-            <h1 className="page-title">Reports & Business Analytics 📈</h1>
+            <h1 className="page-title">Reports & Business Analytics</h1>
             <span className="reports-period-badge">
-              <span>🗓️</span>
+              <span><Calendar size={14} /></span>
               <span>{reportPeriod.label || 'Selected Period'}</span>
             </span>
           </div>
@@ -323,7 +340,7 @@ export default function ReportsPage({ user, addToast }) {
             disabled={exporting}
             title="Download reconciled CSV report"
           >
-            <span>📥</span>
+            <span><Download size={15} /></span>
             <span>{exporting ? 'Exporting…' : 'Export CSV'}</span>
           </button>
 
@@ -333,7 +350,7 @@ export default function ReportsPage({ user, addToast }) {
             onClick={handlePrint}
             title="Print or Save as PDF"
           >
-            <span>🖨️</span>
+            <span><Printer size={15} /></span>
             <span>Print Report</span>
           </button>
 
@@ -344,7 +361,7 @@ export default function ReportsPage({ user, addToast }) {
             disabled={refreshing}
             title="Refresh current report calculations"
           >
-            <span className={`report-spin-icon ${refreshing ? 'spinning' : ''}`}>🔄</span>
+            <span className={`report-spin-icon ${refreshing ? 'spinning' : ''}`}><RefreshCw size={15} /></span>
             <span>{refreshing ? 'Refreshing…' : 'Refresh'}</span>
           </button>
         </div>
@@ -358,28 +375,28 @@ export default function ReportsPage({ user, addToast }) {
             className={`period-pill-btn ${period === 'daily' ? 'active' : ''}`}
             onClick={() => setPeriod('daily')}
           >
-            <span>📅</span> Daily
+            <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 5 }}><Calendar size={14} /></span> Daily
           </button>
           <button
             type="button"
             className={`period-pill-btn ${period === 'weekly' ? 'active' : ''}`}
             onClick={() => setPeriod('weekly')}
           >
-            <span>🗓️</span> Weekly
+            <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 5 }}><Calendar size={14} /></span> Weekly
           </button>
           <button
             type="button"
             className={`period-pill-btn ${period === 'monthly' ? 'active' : ''}`}
             onClick={() => setPeriod('monthly')}
           >
-            <span>📊</span> Monthly
+            <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 5 }}><ChartNoAxesCombined size={14} /></span> Monthly
           </button>
           <button
             type="button"
             className={`period-pill-btn ${period === 'custom' ? 'active' : ''}`}
             onClick={() => setPeriod('custom')}
           >
-            <span>🔍</span> Custom Range
+            <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 5 }}><Search size={14} /></span> Custom Range
           </button>
         </div>
 
@@ -484,42 +501,42 @@ export default function ReportsPage({ user, addToast }) {
           className={`section-tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
           onClick={() => setActiveTab('overview')}
         >
-          <span>📊</span> Overview & Trends
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><ChartNoAxesCombined size={15} /></span> Overview & Trends
         </button>
         <button
           type="button"
           className={`section-tab-btn ${activeTab === 'sales' ? 'active' : ''}`}
           onClick={() => setActiveTab('sales')}
         >
-          <span>🧾</span> Sales & Products ({productSales.length})
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><ReceiptText size={15} /></span> Sales & Products ({productSales.length})
         </button>
         <button
           type="button"
           className={`section-tab-btn ${activeTab === 'collections' ? 'active' : ''}`}
           onClick={() => setActiveTab('collections')}
         >
-          <span>💳</span> Collections ({collections.payments_count ?? 0})
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Wallet size={15} /></span> Collections ({collections.payments_count ?? 0})
         </button>
         <button
           type="button"
           className={`section-tab-btn ${activeTab === 'outstanding' ? 'active' : ''}`}
           onClick={() => setActiveTab('outstanding')}
         >
-          <span>⚠️</span> Period-End Outstanding ({periodOutstanding.owing_customers_count ?? 0})
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><CircleAlert size={15} /></span> Period-End Outstanding ({periodOutstanding.owing_customers_count ?? 0})
         </button>
         <button
           type="button"
           className={`section-tab-btn ${activeTab === 'loads' ? 'active' : ''}`}
           onClick={() => setActiveTab('loads')}
         >
-          <span>🐔</span> Chicken Processing ({chickenLoads.total_loads ?? 0})
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Truck size={15} /></span> Chicken Processing ({chickenLoads.total_loads ?? 0})
         </button>
         <button
           type="button"
           className={`section-tab-btn ${activeTab === 'stock' ? 'active' : ''}`}
           onClick={() => setActiveTab('stock')}
         >
-          <span>📦</span> Stock Observations ({stockObs.count ?? 0})
+          <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><Boxes size={15} /></span> Stock Observations ({stockObs.count ?? 0})
         </button>
       </nav>
 
@@ -529,7 +546,7 @@ export default function ReportsPage({ user, addToast }) {
         <div className="report-kpi-card kpi-sales">
           <div className="report-kpi-header">
             <span className="report-kpi-label">Total Invoiced Sales</span>
-            <span className="report-kpi-icon">🧾</span>
+            <span className="report-kpi-icon"><ReceiptText size={20} /></span>
           </div>
           <div className="report-kpi-value">{fmtCurrency(salesSummary.total_sales)}</div>
           <div className="report-kpi-subtext">
@@ -549,7 +566,7 @@ export default function ReportsPage({ user, addToast }) {
         <div className="report-kpi-card kpi-collections">
           <div className="report-kpi-header">
             <span className="report-kpi-label">Collections Received</span>
-            <span className="report-kpi-icon">💵</span>
+            <span className="report-kpi-icon"><Wallet size={20} /></span>
           </div>
           <div className="report-kpi-value">{fmtCurrency(collections.total_collections)}</div>
           <div className="report-kpi-subtext">
@@ -576,7 +593,7 @@ export default function ReportsPage({ user, addToast }) {
         <div className="report-kpi-card kpi-credit">
           <div className="report-kpi-header">
             <span className="report-kpi-label">Period-End Outstanding</span>
-            <span className="report-kpi-icon">⚠️</span>
+            <span className="report-kpi-icon"><CircleAlert size={20} /></span>
           </div>
           <div className="report-kpi-value">{fmtCurrency(periodOutstanding.total_period_end_outstanding)}</div>
           <div className="report-kpi-subtext">
@@ -596,7 +613,7 @@ export default function ReportsPage({ user, addToast }) {
         <div className="report-kpi-card kpi-processing">
           <div className="report-kpi-header">
             <span className="report-kpi-label">Dressed Chicken Output</span>
-            <span className="report-kpi-icon">🐔</span>
+            <span className="report-kpi-icon"><Truck size={20} /></span>
           </div>
           <div className="report-kpi-value">{fmtKg(chickenLoads.total_dressed_weight_kg)}</div>
           <div className="report-kpi-subtext">
@@ -622,7 +639,7 @@ export default function ReportsPage({ user, addToast }) {
           <div className="report-chart-card">
             <div className="chart-card-header">
               <span className="chart-card-title">
-                <span>📈</span> Daily Sales vs. Collections Trend
+                <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><TrendingUp size={16} /></span> Daily Sales vs. Collections Trend
               </span>
               <div className="chart-card-legend">
                 <span className="legend-item">
@@ -713,7 +730,7 @@ export default function ReportsPage({ user, addToast }) {
           <div className="report-chart-card">
             <div className="chart-card-header">
               <span className="chart-card-title">
-                <span>🤝</span> Sales by Customer Category
+                <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 6 }}><UsersRound size={16} /></span> Sales by Customer Category
               </span>
             </div>
 
@@ -725,9 +742,6 @@ export default function ReportsPage({ user, addToast }) {
                   <div key={c.category_key} className="category-bar-item">
                     <div className="cat-bar-header">
                       <span className="cat-bar-label">
-                        {c.category_key === 'walkin' && '🚶'}
-                        {c.category_key === 'hotel_party' && '🏨'}
-                        {c.category_key === 'retail' && '🤝'}
                         {c.category_label}
                       </span>
                       <span className="cat-bar-values">
@@ -756,7 +770,7 @@ export default function ReportsPage({ user, addToast }) {
         <section className="report-section" aria-labelledby="products-breakdown-heading">
           <div className="report-section-header">
             <h2 id="products-breakdown-heading" className="report-section-title">
-              <span>🍗</span> Product Sales & Revenue (Historical Charged Rates)
+              <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Drumstick size={18} /></span> Product Sales & Revenue (Historical Charged Rates)
             </h2>
             <input
               type="search"
@@ -818,7 +832,7 @@ export default function ReportsPage({ user, addToast }) {
         <section className="report-section" aria-labelledby="collections-breakdown-heading">
           <div className="report-section-header">
             <h2 id="collections-breakdown-heading" className="report-section-title">
-              <span>💳</span> Collections Received by Payment Method
+              <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Wallet size={18} /></span> Collections Received by Payment Method
             </h2>
             <span className="report-kpi-subtext">
               Zero double-counting: reflects actual cash and digital transfers received
@@ -846,10 +860,6 @@ export default function ReportsPage({ user, addToast }) {
                       <tr key={m.method}>
                         <td>
                           <span className="badge-method">
-                            {m.method === 'cash' && '💵 '}
-                            {m.method === 'upi' && '📱 '}
-                            {m.method === 'bank' && '🏦 '}
-                            {m.method === 'other' && '📄 '}
                             {m.method.toUpperCase()}
                           </span>
                         </td>
@@ -878,7 +888,7 @@ export default function ReportsPage({ user, addToast }) {
           <div className="report-section-header">
             <div>
               <h2 id="outstanding-breakdown-heading" className="report-section-title">
-                <span>⚠️</span> Period-End Customer Outstanding (As of {reportPeriod.endDate})
+                <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><CircleAlert size={18} /></span> Period-End Customer Outstanding (As of {reportPeriod.endDate})
               </h2>
               <p className="page-subtitle">
                 Point-in-time calculation: Opening Balance + Credit Sales through {reportPeriod.endDate} - Payments through {reportPeriod.endDate} ± Adjustments.
@@ -979,7 +989,7 @@ export default function ReportsPage({ user, addToast }) {
           <div className="report-section-header">
             <div>
               <h2 id="loads-breakdown-heading" className="report-section-title">
-                <span>🐔</span> Chicken Processing & Wastage Breakdown
+                <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Truck size={18} /></span> Chicken Processing & Wastage Breakdown
               </h2>
               <p className="page-subtitle">
                 Weighted aggregate wastage: <code>((SUM(live) - SUM(dressed)) / SUM(live)) * 100</code>
@@ -1059,7 +1069,7 @@ export default function ReportsPage({ user, addToast }) {
           <div className="report-section-header">
             <div>
               <h2 id="stock-breakdown-heading" className="report-section-title">
-                <span>📦</span> Manual Physical Stock Observations
+                <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: 8 }}><Boxes size={18} /></span> Manual Physical Stock Observations
               </h2>
               <p className="page-subtitle">
                 Actual physical inventory checks recorded by staff and admin during this period.

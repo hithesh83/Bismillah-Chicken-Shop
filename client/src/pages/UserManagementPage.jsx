@@ -16,6 +16,22 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState, RoleBadge, StatusBadge } from '../components/ui/UIStates.jsx'
+import {
+  Users,
+  UserCheck,
+  Crown,
+  Briefcase,
+  UsersRound,
+  RefreshCw,
+  Pencil,
+  Shield,
+  Key,
+  ScrollText,
+  CircleX,
+  CircleCheck,
+  TriangleAlert,
+  X,
+} from '../components/ui/Icons.jsx'
 import './pages.css'
 import './UserManagementPage.css'
 
@@ -263,7 +279,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
     return (
       <div className="page users-page">
         <div className="placeholder-card">
-          <span className="placeholder-icon">🚫</span>
+          <span className="placeholder-icon"><Shield size={40} /></span>
           <span className="placeholder-label">Access Restricted</span>
           <p className="placeholder-desc">
             User management requires <strong>Administrator</strong> privileges.
@@ -278,7 +294,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
       {/* ── Page Header ─────────────────────────────────────────── */}
       <div className="page-header">
         <div>
-          <h1 className="page-title">User Management 👥</h1>
+          <h1 className="page-title">User Management</h1>
           <p className="page-subtitle">
             Create, monitor, and manage staff accounts, roles, and administrative access.
           </p>
@@ -298,14 +314,14 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
       {summary && (
         <section className="users-summary-grid" aria-label="User Accounts Overview">
           <div className="user-summary-card">
-            <span className="user-summary-icon">👥</span>
+            <span className="user-summary-icon"><Users size={20} /></span>
             <div className="user-summary-details">
               <span className="user-summary-label">Total Users</span>
               <span className="user-summary-value">{summary.total_users ?? 0}</span>
             </div>
           </div>
           <div className="user-summary-card">
-            <span className="user-summary-icon">✅</span>
+            <span className="user-summary-icon"><UserCheck size={20} /></span>
             <div className="user-summary-details">
               <span className="user-summary-label">Active Users</span>
               <span className="user-summary-value" style={{ color: 'var(--color-ok)' }}>
@@ -314,21 +330,21 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
             </div>
           </div>
           <div className="user-summary-card">
-            <span className="user-summary-icon">👑</span>
+            <span className="user-summary-icon"><Crown size={20} /></span>
             <div className="user-summary-details">
               <span className="user-summary-label">Admins</span>
               <span className="user-summary-value">{summary.admin_count ?? 0}</span>
             </div>
           </div>
           <div className="user-summary-card">
-            <span className="user-summary-icon">💼</span>
+            <span className="user-summary-icon"><Briefcase size={20} /></span>
             <div className="user-summary-details">
               <span className="user-summary-label">Managers</span>
               <span className="user-summary-value">{summary.manager_count ?? 0}</span>
             </div>
           </div>
           <div className="user-summary-card">
-            <span className="user-summary-icon">🧑‍🌾</span>
+            <span className="user-summary-icon"><UsersRound size={20} /></span>
             <div className="user-summary-details">
               <span className="user-summary-label">Staff</span>
               <span className="user-summary-value">{summary.staff_count ?? 0}</span>
@@ -377,7 +393,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
           disabled={refreshing}
           title="Refresh user list"
         >
-          <span className={`report-spin-icon ${refreshing ? 'spinning' : ''}`}>🔄</span>
+          <span className={`report-spin-icon ${refreshing ? 'spinning' : ''}`}><RefreshCw size={15} /></span>
           <span>Refresh</span>
         </button>
       </section>
@@ -445,7 +461,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                           onClick={() => setEditUser(u)}
                           title="Edit Profile"
                         >
-                          ✏️ Edit
+                          <Pencil size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Edit
                         </button>
 
                         <button
@@ -454,7 +470,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                           onClick={() => setRoleUser(u)}
                           title="Change Role"
                         >
-                          🛡️ Role
+                          <Shield size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Role
                         </button>
 
                         <button
@@ -463,7 +479,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                           onClick={() => setResetUser(u)}
                           title="Reset Password"
                         >
-                          🔑 Reset Pass
+                          <Key size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Reset Pass
                         </button>
 
                         <button
@@ -472,7 +488,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                           onClick={() => handleOpenAudit(u)}
                           title="View Details & Audit Trail"
                         >
-                          📜 Audit
+                          <ScrollText size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Audit
                         </button>
 
                         <button
@@ -481,7 +497,11 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                           onClick={() => setStatusUser(u)}
                           title={u.is_active ? 'Deactivate Account' : 'Reactivate Account'}
                         >
-                          {u.is_active ? '🚫 Deactivate' : '✅ Reactivate'}
+                          {u.is_active ? (
+                            <><CircleX size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Deactivate</>
+                          ) : (
+                            <><CircleCheck size={13} style={{ marginRight: 4, verticalAlign: 'middle' }} /> Reactivate</>
+                          )}
                         </button>
                       </div>
                     </td>
@@ -505,7 +525,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                 onClick={() => setIsCreateOpen(false)}
                 disabled={submitting}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
             <form onSubmit={handleCreateSubmit}>
@@ -596,14 +616,14 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
         <div className="modal-overlay" onClick={() => !submitting && setEditUser(null)}>
           <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title"><span>✏️</span> Edit Profile</h2>
+              <h2 className="modal-title"><span><Pencil size={18} /></span> Edit Profile</h2>
               <button
                 type="button"
                 className="modal-close-btn"
                 onClick={() => setEditUser(null)}
                 disabled={submitting}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
             <form onSubmit={handleEditSubmit}>
@@ -662,14 +682,14 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
         <div className="modal-overlay" onClick={() => !submitting && setRoleUser(null)}>
           <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title"><span>🛡️</span> Change Account Role</h2>
+              <h2 className="modal-title"><span><Shield size={18} /></span> Change Account Role</h2>
               <button
                 type="button"
                 className="modal-close-btn"
                 onClick={() => setRoleUser(null)}
                 disabled={submitting}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
             <form onSubmit={handleRoleSubmit}>
@@ -695,7 +715,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
 
                 {roleUser.role === 'admin' && (
                   <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-warning)' }}>
-                    ⚠️ Note: You cannot demote the last active administrator in the system.
+                    <TriangleAlert size={14} style={{ verticalAlign: 'middle', marginRight: 4 }} /> Note: You cannot demote the last active administrator in the system.
                   </p>
                 )}
               </div>
@@ -727,14 +747,14 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
         <div className="modal-overlay" onClick={() => !submitting && setResetUser(null)}>
           <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title"><span>🔑</span> Reset User Password</h2>
+              <h2 className="modal-title"><span><Key size={18} /></span> Reset User Password</h2>
               <button
                 type="button"
                 className="modal-close-btn"
                 onClick={() => setResetUser(null)}
                 disabled={submitting}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
             <form onSubmit={handleResetPasswordSubmit}>
@@ -789,7 +809,11 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
           <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2 className="modal-title">
-                {statusUser.is_active ? '🚫 Deactivate Account' : '✅ Reactivate Account'}
+                {statusUser.is_active ? (
+                  <><CircleX size={18} style={{ marginRight: 6, verticalAlign: 'middle' }} /> Deactivate Account</>
+                ) : (
+                  <><CircleCheck size={18} style={{ marginRight: 6, verticalAlign: 'middle' }} /> Reactivate Account</>
+                )}
               </h2>
               <button
                 type="button"
@@ -797,7 +821,7 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
                 onClick={() => setStatusUser(null)}
                 disabled={submitting}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
             <div className="modal-body">
@@ -847,13 +871,13 @@ export default function UserManagementPage({ user: currentUser, addToast }) {
         <div className="modal-overlay" onClick={() => setAuditUser(null)}>
           <div className="modal-dialog" style={{ maxWidth: '640px' }} onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title"><span>📜</span> Account Audit Trail</h2>
+              <h2 className="modal-title"><span><ScrollText size={18} /></span> Account Audit Trail</h2>
               <button
                 type="button"
                 className="modal-close-btn"
                 onClick={() => setAuditUser(null)}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
             <div className="modal-body">

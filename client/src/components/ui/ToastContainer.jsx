@@ -7,7 +7,15 @@
  * Usage:
  *   <ToastContainer toasts={toasts} onRemove={removeToast} />
  */
+import { CircleCheck, CircleX, TriangleAlert, Info, X } from './Icons.jsx'
 import './ToastContainer.css'
+
+const ICONS = {
+  success: <CircleCheck size={18} />,
+  error:   <CircleX size={18} />,
+  warning: <TriangleAlert size={18} />,
+  info:    <Info size={18} />,
+}
 
 export default function ToastContainer({ toasts, onRemove }) {
   if (!toasts.length) return null
@@ -20,24 +28,17 @@ export default function ToastContainer({ toasts, onRemove }) {
           className={`toast toast--${toast.type}`}
           role="alert"
         >
-          <span className="toast__icon">{ICONS[toast.type]}</span>
+          <span className="toast__icon">{ICONS[toast.type] || <Info size={18} />}</span>
           <span className="toast__message">{toast.message}</span>
           <button
             className="toast__close"
             onClick={() => onRemove(toast.id)}
             aria-label="Dismiss notification"
           >
-            ×
+            <X size={15} />
           </button>
         </div>
       ))}
     </div>
   )
-}
-
-const ICONS = {
-  success: '✅',
-  error:   '⚠️',
-  warning: '🔔',
-  info:    'ℹ️',
 }

@@ -13,6 +13,7 @@
  */
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import { Package } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 const CATEGORIES = ['whole', 'cut', 'offal']
@@ -165,7 +166,7 @@ export default function ProductsPage({ user, addToast }) {
         <ErrorState message={error} onRetry={fetchProducts} />
       ) : visible.length === 0 ? (
         <EmptyState
-          icon="📦"
+          icon={Package}
           title="No products found"
           message={search ? `No products match "${search}".` : 'No products in this filter.'}
         />

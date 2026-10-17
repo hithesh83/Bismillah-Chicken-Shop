@@ -14,6 +14,7 @@
  *   onClose   — close the mobile drawer
  */
 import { NAV_ITEMS, canAccess, navigate } from '../../router.js'
+import { Drumstick } from '../ui/Icons.jsx'
 import './Sidebar.css'
 
 export default function Sidebar({ user, currentId, isOpen, onClose }) {
@@ -53,7 +54,7 @@ export default function Sidebar({ user, currentId, isOpen, onClose }) {
       >
         {/* Brand */}
         <div className="sidebar-brand">
-          <span className="sidebar-brand-icon">🍗</span>
+          <span className="sidebar-brand-icon"><Drumstick size={22} /></span>
           <span className="sidebar-brand-name">Bismillah</span>
         </div>
 
@@ -70,6 +71,7 @@ export default function Sidebar({ user, currentId, isOpen, onClose }) {
 
             const { item } = entry
             const isActive = item.id === currentId
+            const IconComponent = item.icon
 
             return (
               <li key={item.id}>
@@ -78,7 +80,9 @@ export default function Sidebar({ user, currentId, isOpen, onClose }) {
                   onClick={() => handleNav(item)}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <span className="sidebar-item-icon">{item.icon}</span>
+                  <span className="sidebar-item-icon">
+                    {typeof IconComponent === 'function' ? <IconComponent size={19} /> : IconComponent}
+                  </span>
                   <span className="sidebar-item-label">{item.label}</span>
                   {isActive && <span className="sidebar-item-dot" aria-hidden="true" />}
                 </button>

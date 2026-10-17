@@ -13,6 +13,7 @@
  */
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import { Truck } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Helpers ────────────────────────────────────────────────
@@ -362,7 +363,7 @@ export default function ChickenLoadsPage({ user, addToast }) {
         <ErrorState message={error} onRetry={() => fetchLoads(page)} />
       ) : loads.length === 0 ? (
         <EmptyState
-          icon="🐔"
+          icon={Truck}
           title="No load records"
           message='No chicken loads match the current filters. Click "+ New Load" to add one.'
         />

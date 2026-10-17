@@ -7,6 +7,8 @@
  *   <EmptyState title icon action />     — empty list/result placeholder
  *   <SuccessState message />             — success confirmation
  */
+import React from 'react'
+import { TriangleAlert, Inbox, CircleCheck } from './Icons.jsx'
 import './UIStates.css'
 
 /** Inline or full-area loading spinner */
@@ -24,7 +26,9 @@ export function LoadingState({ label = 'Loading…', fullPage = false }) {
 export function ErrorState({ message = 'Something went wrong.', onRetry }) {
   return (
     <div className="ui-state ui-state--error" role="alert">
-      <span className="ui-state__icon">⚠️</span>
+      <span className="ui-state__icon">
+        <TriangleAlert size={36} />
+      </span>
       <p className="ui-state__label">{message}</p>
       {onRetry && (
         <button className="ui-state__action" onClick={onRetry}>
@@ -37,15 +41,24 @@ export function ErrorState({ message = 'Something went wrong.', onRetry }) {
 
 /** Empty list / no results placeholder */
 export function EmptyState({
-  icon    = '📭',
+  icon,
   title   = 'Nothing here yet',
   message = 'Records will appear here once they are added.',
   action,
   actionLabel = 'Add New',
 }) {
+  function renderIcon() {
+    if (!icon) return <Inbox size={42} />
+    if (typeof icon === 'function') return React.createElement(icon, { size: 42 })
+    if (React.isValidElement(icon)) return icon
+    return icon
+  }
+
   return (
     <div className="ui-state ui-state--empty">
-      <span className="ui-state__icon">{icon}</span>
+      <span className="ui-state__icon">
+        {renderIcon()}
+      </span>
       <h3 className="ui-state__title">{title}</h3>
       {message && <p className="ui-state__label">{message}</p>}
       {action && (
@@ -61,7 +74,9 @@ export function EmptyState({
 export function SuccessState({ message = 'Done!' }) {
   return (
     <div className="ui-state ui-state--success" role="status">
-      <span className="ui-state__icon">✅</span>
+      <span className="ui-state__icon">
+        <CircleCheck size={32} />
+      </span>
       <span className="ui-state__label">{message}</span>
     </div>
   )

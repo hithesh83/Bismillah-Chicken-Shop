@@ -16,6 +16,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { LoadingState, ErrorState, EmptyState } from '../components/ui/UIStates.jsx'
+import { Scale, Boxes, ScrollText } from '../components/ui/Icons.jsx'
 import './pages.css'
 
 // ── Date and Format Helpers ─────────────────────────────────
@@ -364,7 +365,7 @@ export default function RemainingStockPage({ user, addToast }) {
           gap: '0.85rem',
         }}
       >
-        <span style={{ fontSize: '1.4rem' }}>⚖️</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center' }}><Scale size={22} /></span>
         <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-muted)', lineHeight: 1.5 }}>
           <strong style={{ color: 'var(--color-text)' }}>Audit & Physical Integrity Notice:</strong> Every recorded reading is an immutable historical observation. Entering a new reading will <em>not</em> overwrite previous counts taken earlier today. Authorized corrections by Administrators create linked correction entries with full audit logs.
         </div>
@@ -387,7 +388,7 @@ export default function RemainingStockPage({ user, addToast }) {
           <LoadingState label="Loading latest product stock readings…" />
         ) : latestData.length === 0 ? (
           <EmptyState
-            icon="📦"
+            icon={Boxes}
             title="No Products Configured"
             message="No active products found in the catalog."
           />
@@ -588,7 +589,7 @@ export default function RemainingStockPage({ user, addToast }) {
         ) : history.length === 0 ? (
           <div style={{ padding: '2rem' }}>
             <EmptyState
-              icon="📋"
+              icon={ScrollText}
               title="No observations found"
               message="No stock readings match your current filters. Record a new physical observation to get started."
               action={() => openRecordModal()}
