@@ -6,12 +6,13 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=../.env --watch src/index.js",
-    "start": "node --env-file=../.env src/index.js",
+    "start": "node src/index.js",
     "db:migrate": "node src/db/migrate.js",
     "db:status": "node src/db/migrate.js --status",
     "db:verify": "node src/db/verify.js",
     "admin:provision": "node scripts/provision-admin.js",
-    "test": "node --test --test-concurrency=1 tests/schema.test.js tests/auth.test.js tests/products.test.js tests/chicken_loads.test.js tests/stock_entries.test.js tests/customers.test.js tests/sales.test.js tests/payments.test.js tests/dashboard.test.js tests/reports.test.js tests/users_and_settings.test.js",
+    "test": "node --test --test-concurrency=1 tests/schema.test.js tests/auth.test.js tests/products.test.js tests/chicken_loads.test.js tests/stock_entries.test.js tests/customers.test.js tests/sales.test.js tests/payments.test.js tests/dashboard.test.js tests/reports.test.js tests/users_and_settings.test.js tests/phase13_security_audit.test.js tests/production_readiness.test.js",
+    "test:p14": "node --test tests/production_readiness.test.js",
     "test:p6": "node --test tests/chicken_loads.test.js",
     "test:p7": "node --test tests/stock_entries.test.js",
     "test:p8": "node --test tests/customers.test.js",
@@ -19,7 +20,9 @@
     "test:p10": "node --test tests/payments.test.js",
     "test:p11": "node --test tests/dashboard.test.js",
     "test:p12": "node --test tests/reports.test.js",
-    "test:users": "node --test tests/users_and_settings.test.js"
+    "test:users": "node --test tests/users_and_settings.test.js",
+    "test:p13": "node --test tests/phase13_security_audit.test.js",
+    "test:security": "node --test tests/phase13_security_audit.test.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

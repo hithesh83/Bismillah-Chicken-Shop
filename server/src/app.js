@@ -27,25 +27,58 @@ import reportsRouter     from './routes/reports.js'
 import usersRouter       from './routes/users.js'
 import settingsRouter    from './routes/settings.js'
 import { requireAuth }    from './auth/middleware.js'
+import { query }          from './db/pool.js'
 
 const app = express()
+
+// ── Reverse Proxy Trust (Required for Render / Cloudflare / ALB) ───
+app.set('trust proxy', 1)
 
 // ── Middleware ─────────────────────────────────────────────
 app.use(express.json())
 app.use(cookieParser())
 
-// CORS: allow the configured frontend origin with credentials (needed for cookies)
-const allowedOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
-app.use(cors({
-  origin:      allowedOrigin,
-  credentials: true,
-}))
+// CORS: allow only exact configured frontend origin(s) with credentials (no wildcard with credentials)
+const rawOrigins = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
+const allowedOrigins = rawOrigins
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean)
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. server-to-server health checks, curl, mobile clients)
+      if (!origin) return callback(null, true)
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+      // Return false to reject origin without throwing a 500 error
+      return callback(null, false)
+    },
+    credentials: true,
+  })
+)
+
+// Lightweight origin verification for state-changing cross-origin requests
+app.use((req, res, next) => {
+  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
+    const origin = req.headers.origin
+    if (origin && !allowedOrigins.includes(origin)) {
+      return res.status(403).json({
+        error: 'Forbidden',
+        message: 'Cross-origin request rejected.',
+      })
+    }
+  }
+  next()
+})
 
 // ── Routes ─────────────────────────────────────────────────
 
 /**
  * GET /api/health
- * Liveness check — no database required.
+ * Liveness check — fast process check, no external dependencies.
  */
 app.get('/api/health', (_req, res) => {
   res.json({
@@ -53,6 +86,33 @@ app.get('/api/health', (_req, res) => {
     timestamp:   new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
   })
+})
+
+/**
+ * GET /api/health/ready
+ * Readiness check — verifies database connectivity with a lightweight ping.
+ * Safe error handling: never leaks connection strings, secrets, or internal stack traces.
+ */
+app.get('/api/health/ready', async (_req, res) => {
+  try {
+    const start = Date.now()
+    await query('SELECT 1')
+    const latencyMs = Date.now() - start
+
+    return res.status(200).json({
+      status:     'ready',
+      database:   'connected',
+      latency_ms: latencyMs,
+      timestamp:  new Date().toISOString(),
+    })
+  } catch (err) {
+    console.error('[health:ready] Database ping failed:', err.message)
+    return res.status(503).json({
+      status:    'unavailable',
+      database:  'disconnected',
+      timestamp: new Date().toISOString(),
+    })
+  }
 })
 
 /**

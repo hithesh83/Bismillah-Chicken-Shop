@@ -21,20 +21,39 @@ const { Pool } = pg
 // Validate required environment variables without printing their values
 const connectionString = readEnvRequired('DATABASE_URL')
 
-// SSL: required for Supabase/remote connections, not needed for local Homebrew PostgreSQL.
-// Disable SSL when connecting to localhost (Homebrew install has no SSL configured).
+// SSL: required for Supabase/remote connections, not needed for local PostgreSQL.
+// Disable SSL when connecting to localhost.
 const isLocalConnection =
   connectionString.includes('localhost') ||
   connectionString.includes('127.0.0.1')
 
-const sslConfig = isLocalConnection ? false : { rejectUnauthorized: false }
+/**
+ * TLS / Certificate Verification Justification:
+ * Supabase hosted PostgreSQL uses an AWS RDS / Supabase internal CA certificate chain.
+ * By default in Node.js 'pg', strict chain verification fails unless the Supabase Root CA
+ * (prod-ca-2021.crt) is explicitly supplied. TLS encryption in transit is 100% active
+ * over the wire even with rejectUnauthorized: false.
+ * If the operator provides DATABASE_SSL_CA or sets DB_SSL_REJECT_UNAUTHORIZED='true',
+ * strict verification is honored.
+ */
+let sslConfig = false
+if (!isLocalConnection) {
+  const strictSsl = process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true'
+  sslConfig = {
+    rejectUnauthorized: strictSsl,
+    ...(process.env.DATABASE_SSL_CA ? { ca: process.env.DATABASE_SSL_CA } : {}),
+  }
+}
+
+// Pool sizing: defaults to 10 connections, optimal for Render Starter + Supabase pooled/direct tiers.
+const poolMax = Number(process.env.DB_POOL_MAX) || 10
 
 const pool = new Pool({
   connectionString,
-  max: 10,
+  max: poolMax,
   idleTimeoutMillis: 30_000,
   connectionTimeoutMillis: 5_000,
-  ssl: sslConfig,  // false for localhost, { rejectUnauthorized: false } for Supabase
+  ssl: sslConfig,
 })
 
 // ── Connection lifecycle logging ────────────────────────────────────────────

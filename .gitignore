@@ -31,3 +31,11 @@ Thumbs.db
 
 # ─── Testing / Coverage ─────────────────────────────────────
 coverage/
+
+# ─── Supabase CLI Generated Artifacts ───────────────────────
+supabase/.temp/
+.temp/
+
+# ─── Database Backups ───────────────────────────────────────
+backups/
+*.dump

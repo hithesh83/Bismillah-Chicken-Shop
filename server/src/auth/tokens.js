@@ -44,11 +44,18 @@ export function issueTokenCookie(res, user) {
   )
 
   const isProd = process.env.NODE_ENV === 'production'
+  const rawSameSite = (process.env.COOKIE_SAME_SITE || '').toLowerCase().trim()
+  const sameSite = rawSameSite === 'none'
+    ? 'none'
+    : (rawSameSite === 'strict' ? 'strict' : (rawSameSite === 'lax' ? 'lax' : (isProd ? 'none' : 'lax')))
+
+  // Browsers strictly require secure: true whenever sameSite is 'none'
+  const secure = sameSite === 'none' || isProd
 
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,                     // JS cannot read this cookie
-    sameSite: isProd ? 'Strict' : 'Lax',  // Lax needed for Vite dev proxy
-    secure:   isProd,                   // HTTPS-only in production
+    sameSite,
+    secure,
     maxAge:   TOKEN_EXPIRY_SECONDS * 1000,
     path:     '/',
   })
@@ -60,7 +67,19 @@ export function issueTokenCookie(res, user) {
  * @param {import('express').Response} res
  */
 export function clearTokenCookie(res) {
-  res.clearCookie(COOKIE_NAME, { path: '/' })
+  const isProd = process.env.NODE_ENV === 'production'
+  const rawSameSite = (process.env.COOKIE_SAME_SITE || '').toLowerCase().trim()
+  const sameSite = rawSameSite === 'none'
+    ? 'none'
+    : (rawSameSite === 'strict' ? 'strict' : (rawSameSite === 'lax' ? 'lax' : (isProd ? 'none' : 'lax')))
+  const secure = sameSite === 'none' || isProd
+
+  res.clearCookie(COOKIE_NAME, {
+    path:     '/',
+    httpOnly: true,
+    sameSite,
+    secure,
+  })
 }
 
 /**
